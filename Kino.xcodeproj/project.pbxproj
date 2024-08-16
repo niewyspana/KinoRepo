@@ -133,13 +133,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		1049137B2C6CF8D000806984 /* DetailsScreen */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DetailsScreen;
-			sourceTree = "<group>";
-		};
 		10B9BB802C6BA2E700224B55 = {
 			isa = PBXGroup;
 			children = (
@@ -163,7 +156,6 @@
 		10B9BB8B2C6BA2E700224B55 /* Kino */ = {
 			isa = PBXGroup;
 			children = (
-				1049137B2C6CF8D000806984 /* DetailsScreen */,
 				104913772C6CF88700806984 /* MainScreen */,
 				10B9BB8C2C6BA2E700224B55 /* AppDelegate.swift */,
 				10B9BB952C6BA2E900224B55 /* Assets.xcassets */,
