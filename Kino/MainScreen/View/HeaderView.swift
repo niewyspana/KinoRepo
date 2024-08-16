@@ -14,14 +14,12 @@ class HeaderView: UIView {
     
     // Метод для загрузки из XIB
     static func loadFromNib() -> HeaderView {
-            let nib = UINib(nibName: "HeaderView", bundle: nil)
-            return nib.instantiate(withOwner: self, options: nil).first as! HeaderView
-        }
+        let nib = UINib(nibName: "HeaderView", bundle: nil)
+        return nib.instantiate(withOwner: self, options: nil).first as! HeaderView
+    }
     
-    func configure(with text: String, buttonTitle: String?) {
-            label.text = text
-            if let title = buttonTitle {
-                button.setTitle(title, for: .normal)
-        }
+    func configure(with title: String, buttonTitle: String) {
+        label.text = title
+        button.setTitle(buttonTitle, for: .normal)
     }
 }

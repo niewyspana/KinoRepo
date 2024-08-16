@@ -9,10 +9,10 @@ import UIKit
 
 class NavigationViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-            super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        }
-     
-        required init?(coder aDecoder: NSCoder) {
-            super.init(coder: aDecoder)
-        }
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
 }

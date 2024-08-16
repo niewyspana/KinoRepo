@@ -105,16 +105,16 @@
 		104913782C6CF89900806984 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1049137E2C6E26A800806984 /* MainViewController.xib */,
 				104913802C6E28DF00806984 /* MainViewController.swift */,
-				1049138E2C6E8C9000806984 /* TicketsViewController.xib */,
+				1049137E2C6E26A800806984 /* MainViewController.xib */,
 				104913862C6E885200806984 /* TicketsViewController.swift */,
-				10B286FD2C6EAA9800171033 /* HeaderView.xib */,
+				1049138E2C6E8C9000806984 /* TicketsViewController.xib */,
 				104913842C6E2AC300806984 /* HeaderView.swift */,
-				1049138C2C6E8C1000806984 /* FavouritesViewController.xib */,
+				10B286FD2C6EAA9800171033 /* HeaderView.xib */,
 				104913882C6E88E800806984 /* FavouritesViewController.swift */,
-				104913902C6E90B400806984 /* NavigationViewController.xib */,
+				1049138C2C6E8C1000806984 /* FavouritesViewController.xib */,
 				1049138A2C6E8A5200806984 /* NavigationViewController.swift */,
+				104913902C6E90B400806984 /* NavigationViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -131,13 +131,6 @@
 			children = (
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		1049137B2C6CF8D000806984 /* DetailsScreen */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DetailsScreen;
 			sourceTree = "<group>";
 		};
 		10B9BB802C6BA2E700224B55 = {
@@ -163,9 +156,8 @@
 		10B9BB8B2C6BA2E700224B55 /* Kino */ = {
 			isa = PBXGroup;
 			children = (
-				1049137B2C6CF8D000806984 /* DetailsScreen */,
-				104913772C6CF88700806984 /* MainScreen */,
 				10B9BB8C2C6BA2E700224B55 /* AppDelegate.swift */,
+				104913772C6CF88700806984 /* MainScreen */,
 				10B9BB952C6BA2E900224B55 /* Assets.xcassets */,
 				10B9BB972C6BA2E900224B55 /* LaunchScreen.storyboard */,
 				10B9BB9A2C6BA2E900224B55 /* Info.plist */,
