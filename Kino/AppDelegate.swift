@@ -9,28 +9,34 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
+    var window: UIWindow?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        func createNavController(for rootViewController: UIViewController, title: String, imageName: String) -> UINavigationController {
+            rootViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: imageName), tag: 0)
+            rootViewController.navigationItem.title = title
+            rootViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.star"), style: .plain, target: self, action: #selector(leftButtonTapped))
+            rootViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bell.badge"), style: .plain, target: self, action: #selector(rightButtonTapped))
+            return UINavigationController(rootViewController: rootViewController)
+        }
+        
+        let movies = createNavController(for: MainViewController(nibName: "MainViewController", bundle: nil), title: "KinkiNO", imageName: "movieclapper")
+        let tickets = createNavController(for: TicketsViewController(nibName: "TicketsViewController", bundle: nil), title: "Tickets", imageName: "ticket")
+        let favourites = createNavController(for: FavouritesViewController(nibName: "FavouritesViewController", bundle: nil), title: "Favourites", imageName: "heart.fill")
+        
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [movies, tickets, favourites]
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
+        
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-    }
-
-
+    
+    @objc func leftButtonTapped() { }
+    
+    @objc func rightButtonTapped() { }
 }
-
