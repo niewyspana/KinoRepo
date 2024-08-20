@@ -24,15 +24,20 @@ class PopularTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        genresCollectionView.register(GenreCollectionViewCell.nib(), forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
+        setupCollectionView()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    public func configure(with image: UIImage, star: UIImage, title: String, rating: String, timeText: String, clockImage: UIImage, genres: [String]) {
+    public func configure(with image: UIImage,
+                          star: UIImage,
+                          title: String,
+                          rating: String,
+                          timeText: String,
+                          clockImage: UIImage,
+                          genres: [String]) {
         imageMovie.image = image
         self.star.image = star
         movieTitle.text = title
@@ -43,9 +48,44 @@ class PopularTableViewCell: UITableViewCell {
         
         imageMovie.layer.cornerRadius = 8
         imageMovie.layer.masksToBounds = true
+        
+        genresCollectionView.reloadData()
     }
     
     static func nib() -> UINib {
         return UINib(nibName: identifier, bundle: nil)
     }
+    
+    private func setupCollectionView() {
+        genresCollectionView.register(GenreCollectionViewCell.nib(), forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
+        
+        genresCollectionView.delegate = self
+        genresCollectionView.dataSource = self
+        
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.minimumInteritemSpacing = 8
+        flowLayout.estimatedItemSize = CGSize(width: 0, height: 18)
+        
+        genresCollectionView.collectionViewLayout = flowLayout
+    }
+}
+
+extension PopularTableViewCell: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return genres.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as! GenreCollectionViewCell
+        cell.configure(with: genres[indexPath.row])
+        return cell
+    }
+}
+
+extension PopularTableViewCell: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, 
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        CGSize(width: 61, height: 18)
+//    }
 }

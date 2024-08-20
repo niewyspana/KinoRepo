@@ -43,25 +43,26 @@
                         </constraints>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vg0-i3-DYK">
-                        <rect key="frame" x="96" y="82.666666666666671" width="10" height="10"/>
+                        <rect key="frame" x="96" y="90.666666666666671" width="10" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="hUC-sn-bZc"/>
                             <constraint firstAttribute="width" constant="10" id="trV-po-CE1"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hy8-c4-Un2">
-                        <rect key="frame" x="114" y="80.666666666666671" width="31" height="14.333333333333329"/>
+                        <rect key="frame" x="114" y="88.666666666666671" width="31" height="14.333333333333329"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Pil-yp-lhK">
-                        <rect key="frame" x="96" y="56.666666666666657" width="231" height="18"/>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Pil-yp-lhK">
+                        <rect key="frame" x="96" y="56.666666666666657" width="231" height="26"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="18" id="rr4-pp-URD"/>
+                            <constraint firstAttribute="height" constant="26" id="rr4-pp-URD"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="231" id="zTL-Ut-uYY"/>
                         </constraints>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lJS-QY-WEm">
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="lJS-QY-WEm">
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -83,7 +84,7 @@
                     <constraint firstItem="Pil-yp-lhK" firstAttribute="leading" secondItem="ZNi-rb-lsZ" secondAttribute="trailing" constant="8" id="l9W-p4-tda"/>
                     <constraint firstItem="b6q-VH-fJl" firstAttribute="leading" secondItem="ZNi-rb-lsZ" secondAttribute="trailing" constant="8" id="p7a-rJ-yV2"/>
                     <constraint firstAttribute="trailing" secondItem="b6q-VH-fJl" secondAttribute="trailing" constant="8" id="puC-9c-J1R"/>
-                    <constraint firstAttribute="trailing" secondItem="Pil-yp-lhK" secondAttribute="trailing" constant="8" id="qWT-ia-mHT"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Pil-yp-lhK" secondAttribute="trailing" constant="8" id="qWT-ia-mHT"/>
                     <constraint firstItem="vg0-i3-DYK" firstAttribute="top" secondItem="Pil-yp-lhK" secondAttribute="bottom" constant="8" id="rmP-Hn-2JZ"/>
                     <constraint firstAttribute="trailing" secondItem="mxg-Uz-1dC" secondAttribute="trailing" constant="8" id="wGT-sh-xTD"/>
                     <constraint firstItem="Pil-yp-lhK" firstAttribute="leading" secondItem="ZNi-rb-lsZ" secondAttribute="trailing" constant="8" id="wrP-fZ-1XT"/>

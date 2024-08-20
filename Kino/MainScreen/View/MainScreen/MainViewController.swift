@@ -57,7 +57,7 @@ class MainViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate(
             [tableView.topAnchor.constraint(equalTo: tableHeaderView.bottomAnchor),
-             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
              tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
              tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)]
         )
@@ -89,17 +89,16 @@ class MainViewController: UIViewController {
         tableView.register(PopularTableViewCell.nib(), forCellReuseIdentifier: PopularTableViewCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
-        
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
     }
 }
 
-extension MainViewController: UICollectionViewDelegate {
+extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         print("You tapped me")
     }
 }
+
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 12
@@ -138,7 +137,7 @@ extension MainViewController: UITableViewDataSource {
         let rating = "9.8/10.0 IMDb"
         let timetext = "1h 30m"
         let clockImage = UIImage(named: "clock")!
-        cell.configure(with: mainImage, star: starImage, title: movieTitle, rating: rating, timeText: timetext, clockImage: clockImage, genres: ["Horror","COMEDY"])
+        cell.configure(with: mainImage, star: starImage, title: movieTitle, rating: rating, timeText: timetext, clockImage: clockImage, genres: ["HORROR","COMEDY", "THRILER"])
         
         return cell
     }

@@ -8,19 +8,17 @@
 import UIKit
 
 class GenreCollectionViewCell: UICollectionViewCell {
-
+    
     static let identifier = "GenreCollectionViewCell"
     
     @IBOutlet weak var genreLabel: UILabel!
+    @IBOutlet weak var roundedView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        genreLabel.layer.cornerRadius = 8
-        genreLabel.layer.masksToBounds = true
-        genreLabel.backgroundColor = .blue
-        genreLabel.textColor = .white
-        genreLabel.textAlignment = .center
+        roundedView.layer.cornerRadius = roundedView.frame.height / 2
+        roundedView.layer.masksToBounds = true
     }
     
     public func configure(with genre: String) {
