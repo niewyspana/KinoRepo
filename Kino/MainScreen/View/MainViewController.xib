@@ -10,6 +10,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="Kino" customModuleProvider="target">
             <connections>
+                <outlet property="collectionView" destination="mQB-t5-vJO" id="tfD-AM-ZHC"/>
+                <outlet property="collectionViewTopConstraint" destination="eGV-te-kuO" id="5Lr-5Y-GSu"/>
+                <outlet property="tableView" destination="fb6-DU-e7z" id="srX-xx-uHr"/>
                 <outlet property="view" destination="iN0-l3-epB" id="WQO-mZ-DCF"/>
             </connections>
         </placeholder>
@@ -18,14 +21,32 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gvg-2V-tRI" customClass="HeaderView" customModule="Kino" customModuleProvider="target">
-                    <rect key="frame" x="44" y="138" width="305" height="90"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="mQB-t5-vJO">
+                    <rect key="frame" x="0.0" y="100" width="393" height="320"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="320" id="Ct2-aS-RTS"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Tah-5w-LAN">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fb6-DU-e7z">
+                    <rect key="frame" x="85" y="527" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </view>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="mQB-t5-vJO" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="7nS-u1-cDj"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="mQB-t5-vJO" secondAttribute="trailing" id="GJy-1w-QyL"/>
+                <constraint firstItem="mQB-t5-vJO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="100" id="eGV-te-kuO"/>
+            </constraints>
             <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
         </view>
     </objects>
