@@ -12,7 +12,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions 
+                     launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = setupMainNavigationViewController()
         window?.makeKeyAndVisible()
@@ -35,8 +36,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let navigationController = UINavigationController(rootViewController: tabBarController)
         
-        tabBarController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.star"), style: .plain, target: self, action: #selector(leftButtonTapped))
-        tabBarController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bell.badge"), style: .plain, target: self, action: #selector(rightButtonTapped))
+        let listBarButton = UIBarButtonItem(image: UIImage(systemName: "list.star"),
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(leftButtonTapped))
+        
+        tabBarController.navigationItem.leftBarButtonItem = listBarButton
+        
+        let bellBarButton = UIBarButtonItem(image: UIImage(systemName: "bell.badge"), 
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(rightButtonTapped))
+        
+        tabBarController.navigationItem.rightBarButtonItem = bellBarButton
         tabBarController.navigationItem.title = "KinkiNo"
         
         return navigationController
