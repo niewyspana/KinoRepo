@@ -1,5 +1,5 @@
 //
-//  MyTableViewCell.swift
+//  PopularTableViewCell.swift
 //  Kino
 //
 //  Created by Viktoriya Polozova on 19/08/2024.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class MyTableViewCell: UITableViewCell {
+class PopularTableViewCell: UITableViewCell {
     
-    static let identifier = "MyTableViewCell"
+    static let identifier = "PopularTableViewCell"
     
     
     @IBOutlet weak var genresCollectionView: UICollectionView!

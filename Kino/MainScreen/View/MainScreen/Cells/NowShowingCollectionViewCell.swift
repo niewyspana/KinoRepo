@@ -1,5 +1,5 @@
 //
-//  MyCollectionViewCell.swift
+//  NowShowingCollectionViewCell.swift
 //  Kino
 //
 //  Created by Viktoriya Polozova on 19/08/2024.
@@ -7,14 +7,14 @@
 
 import UIKit
 
-class MyCollectionViewCell: UICollectionViewCell {
+class NowShowingCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var imageView: UIImageView!
     @IBOutlet weak var star: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var rating: UILabel!
     
-    static let identifier = "MyCollectionViewCell"
+    static let identifier = "NowShowingCollectionViewCell"
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,6 +32,6 @@ class MyCollectionViewCell: UICollectionViewCell {
     }
     
     static func nib() -> UINib {
-        return UINib(nibName: "MyCollectionViewCell", bundle: nil)
+        return UINib(nibName: "NowShowingCollectionViewCell", bundle: nil)
     }
 }
