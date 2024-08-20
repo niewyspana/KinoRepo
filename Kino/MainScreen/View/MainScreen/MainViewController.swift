@@ -21,7 +21,7 @@ class MainViewController: UIViewController {
         addTableHeaderView()
         addTableView()
         setUpCollectionView()
-        
+        setUpTableView()
     }
     
     private func addHeaderView() {
@@ -84,6 +84,14 @@ class MainViewController: UIViewController {
         
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
     }
+    
+    private func setUpTableView() {
+        tableView.register(MyTableViewCell.nib(), forCellReuseIdentifier: MyTableViewCell.identifier)
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+    }
 }
 
 extension MainViewController: UICollectionViewDelegate {
@@ -103,7 +111,6 @@ extension MainViewController: UICollectionViewDataSource {
         let mainImage = UIImage(named: "image")!
         let starImage = UIImage(named: "star")!
         
-        
         let movieTitle = "The Neverending Story\(indexPath.row + 1)"
         let rating = "9.8/10.0 IMDb"
         
@@ -113,6 +120,53 @@ extension MainViewController: UICollectionViewDataSource {
     }
 }
 
+extension MainViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        12
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MyTableViewCell.identifier, for: indexPath) as! MyTableViewCell
+        let mainImage = UIImage(named: "image")!
+        let starImage = UIImage(named: "star")!
+        
+        let movieTitle = "The Neverending Story\(indexPath.row + 1)"
+        let rating = "9.8/10.0 IMDb"
+        let timetext = "1h 30m"
+        let clockImage = UIImage(named: "clock")!
+        cell.configure(with: mainImage, star: starImage, title: movieTitle, rating: rating, timeText: timetext, clockImage: clockImage, genres: ["Horror","COMEDY"])
+        
+        return cell
+    }
+}
 
-
+extension MainViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 136 // Высота ячейки + отступы (120 + 16)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let inset: CGFloat = 8 // Отступ сверху и снизу по 8 поинтов, итого 16 пунктов
+        let maskLayer = CALayer()
+        maskLayer.frame = CGRect(
+            x: cell.bounds.origin.x,
+            y: cell.bounds.origin.y + inset,
+            width: cell.bounds.width,
+            height: cell.bounds.height - 2 * inset
+        )
+        let maskView = UIView(frame: maskLayer.frame)
+        maskView.layer.masksToBounds = true
+        maskView.layer.cornerRadius = 10 // Закругленные углы (если нужно)
+        maskView.backgroundColor = .white // Цвет фона ячейки (можно настроить)
+        
+        cell.backgroundView = maskView
+        cell.backgroundColor = .clear // Прозрачный фон ячейки
+        tableView.backgroundColor = UIColor.clear // Прозрачный фон таблицы (если нужно)
+    }
+}
 

@@ -23,7 +23,7 @@
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="mQB-t5-vJO">
                     <rect key="frame" x="0.0" y="100" width="393" height="320"/>
-                    <color key="backgroundColor" red="0.92248142259999999" green="0.55414141449999998" blue="0.58807498420000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="320" id="Ct2-aS-RTS"/>
                     </constraints>

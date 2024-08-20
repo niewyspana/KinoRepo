@@ -14,23 +14,30 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1N-zF-iv9">
-                    <rect key="frame" x="16" y="41" width="39" height="18"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                    <rect key="frame" x="23.999999999999996" y="42" width="41.666666666666657" height="16"/>
+                    <fontDescription key="fontDescription" name="STIXTwoText_Bold" family="STIX Two Text" pointSize="16"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aqv-le-NqM">
-                    <rect key="frame" x="804" y="33" width="75" height="34.333333333333343"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="gray" title="Button"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aqv-le-NqM">
+                    <rect key="frame" x="846" y="39.666666666666664" width="33" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="s9F-5Y-gQZ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="tintColor" red="0.66666666666666663" green="0.66274509803921566" blue="0.69411764705882351" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Button">
+                        <color key="titleColor" red="0.66666666666666663" green="0.66274509803921566" blue="0.69411764705882351" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" red="0.94328010082244873" green="0.78724692188048628" blue="0.51444227877195614" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="aqv-le-NqM" secondAttribute="trailing" constant="16" id="4sj-Sh-zTM"/>
                 <constraint firstItem="F1N-zF-iv9" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="8qd-6W-JHg"/>
-                <constraint firstItem="F1N-zF-iv9" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="EyS-Pi-D9z"/>
+                <constraint firstItem="F1N-zF-iv9" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="24" id="EyS-Pi-D9z"/>
                 <constraint firstItem="aqv-le-NqM" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="r8x-W9-9yZ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

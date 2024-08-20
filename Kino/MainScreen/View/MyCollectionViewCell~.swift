@@ -25,11 +25,11 @@ class MyCollectionViewCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 16
     }
     public func configure(with image: UIImage, star: UIImage, title: String, rating: String) {
-            imageView.image = image
-            self.star.image = star
-            movieTitle.text = title
-            self.rating.text = rating
-        }
+        imageView.image = image
+        self.star.image = star
+        movieTitle.text = title
+        self.rating.text = rating
+    }
     
     static func nib() -> UINib {
         return UINib(nibName: "MyCollectionViewCell", bundle: nil)

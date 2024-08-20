@@ -20,6 +20,16 @@ class HeaderView: UIView {
     
     func configure(with title: String, buttonTitle: String) {
         label.text = title
-        button.setTitle(buttonTitle, for: .normal)
+        let buttonTitleWithSpaces = "   " + buttonTitle + "   "
+        button.setTitle(buttonTitleWithSpaces, for: .normal)
+        setupButtonAppearance()
+    }
+    
+    private func setupButtonAppearance() {
+        button.layer.borderColor = UIColor(named: "GrayE5E4EA")?.cgColor
+        button.layer.borderWidth = 1.0
+        button.layer.cornerRadius = button.frame.height / 2
+        button.layer.masksToBounds = true
     }
 }
+
