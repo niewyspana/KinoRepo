@@ -16,7 +16,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="144" height="280"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3FE-VK-wlV">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3FE-VK-wlV">
                         <rect key="frame" x="0.0" y="0.0" width="144" height="212"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="144" id="hsZ-Xg-KFW"/>
@@ -35,7 +35,7 @@
                         <color key="textColor" red="0.61176470588235299" green="0.61176470588235299" blue="0.61176470588235299" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cct-Tv-55u">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="cct-Tv-55u">
                         <rect key="frame" x="0.0" y="247.66666666666666" width="12" height="11.999999999999972"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="12" id="JZ2-JL-Ba0"/>
@@ -68,4 +68,7 @@
             <point key="canvasLocation" x="119" y="-3"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="star" width="11.666666984558105" height="11.333333015441895"/>
+    </resources>
 </document>

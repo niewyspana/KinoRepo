@@ -24,11 +24,10 @@ class NowShowingCollectionViewCell: UICollectionViewCell {
     private func setUpUI() {
         imageView.layer.cornerRadius = 8
     }
-    public func configure(with image: UIImage, star: UIImage, title: String, rating: String) {
-        imageView.image = image
-        self.star.image = star
-        movieTitle.text = title
-        self.rating.text = rating
+    public func configure(movieInfo: MovieInfo) {
+        imageView.image = movieInfo.previewImage
+        movieTitle.text = movieInfo.title
+        rating.text = movieInfo.rating
     }
     
     static func nib() -> UINib {

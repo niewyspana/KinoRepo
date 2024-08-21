@@ -101,20 +101,19 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
 
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
+        return MockMovieInfoStorage.shared.nowShowinMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NowShowingCollectionViewCell.identifier, for: indexPath) as! NowShowingCollectionViewCell
         
-        let mainImage = UIImage(named: "image")!
-        let starImage = UIImage(named: "star")!
+        // let mainImage = UIImage(named: "image")!
+        //  let starImage = UIImage(named: "star")!
+        // let movieTitle = "The Neverending Story\(indexPath.row + 1)"
+        //  let rating = "9.8/10.0 IMDb"
         
-        let movieTitle = "The Neverending Story\(indexPath.row + 1)"
-        let rating = "9.8/10.0 IMDb"
         
-        
-        cell.configure(with: mainImage, star: starImage, title: movieTitle, rating: rating)
+        cell.configure(movieInfo: MockMovieInfoStorage.shared.nowShowinMovies[indexPath.row])
         return cell
     }
 }
@@ -125,19 +124,17 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        12
+        MockMovieInfoStorage.shared.popularMovies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PopularTableViewCell.identifier, for: indexPath) as! PopularTableViewCell
-        let mainImage = UIImage(named: "image")!
-        let starImage = UIImage(named: "star")!
-        
-        let movieTitle = "The Neverending Story\(indexPath.row + 1)"
-        let rating = "9.8/10.0 IMDb"
-        let timetext = "1h 30m"
-        let clockImage = UIImage(named: "clock")!
-        cell.configure(with: mainImage, star: starImage, title: movieTitle, rating: rating, timeText: timetext, clockImage: clockImage, genres: ["HORROR","COMEDY", "THRILER"])
+        // let mainImage = UIImage(named: "image")!
+        // let starImage = UIImage(named: "star")!
+        //let movieTitle = "The Neverending Story\(indexPath.row + 1)"
+        // let rating = "9.8/10.0 IMDb"
+        // let timetext = "1h 30m"
+        cell.configure(movieInfo: MockMovieInfoStorage.shared.popularMovies[indexPath.row])
         
         return cell
     }
@@ -150,7 +147,7 @@ extension MainViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let inset: CGFloat = 8 // Отступ сверху и снизу по 8 поинтов, итого 16 пунктов
+        let inset: CGFloat = 8
         let maskLayer = CALayer()
         maskLayer.frame = CGRect(
             x: cell.bounds.origin.x,
@@ -160,12 +157,12 @@ extension MainViewController: UITableViewDelegate {
         )
         let maskView = UIView(frame: maskLayer.frame)
         maskView.layer.masksToBounds = true
-        maskView.layer.cornerRadius = 10 // Закругленные углы (если нужно)
-        maskView.backgroundColor = .white // Цвет фона ячейки (можно настроить)
+        maskView.layer.cornerRadius = 10
+        maskView.backgroundColor = .white
         
         cell.backgroundView = maskView
-        cell.backgroundColor = .clear // Прозрачный фон ячейки
-        tableView.backgroundColor = UIColor.clear // Прозрачный фон таблицы (если нужно)
+        cell.backgroundColor = .clear
+        tableView.backgroundColor = UIColor.clear
     }
 }
 

@@ -31,20 +31,12 @@ class PopularTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    public func configure(with image: UIImage,
-                          star: UIImage,
-                          title: String,
-                          rating: String,
-                          timeText: String,
-                          clockImage: UIImage,
-                          genres: [String]) {
-        imageMovie.image = image
-        self.star.image = star
-        movieTitle.text = title
-        self.rating.text = rating
-        time.text = timeText
-        clock.image = clockImage
-        self.genres = genres
+    public func configure(movieInfo: MovieInfo) {
+        imageMovie.image = movieInfo.previewImage
+        movieTitle.text = movieInfo.title
+        self.rating.text = movieInfo.rating
+        time.text = movieInfo.duration
+        self.genres = movieInfo.genres
         
         imageMovie.layer.cornerRadius = 8
         imageMovie.layer.masksToBounds = true
