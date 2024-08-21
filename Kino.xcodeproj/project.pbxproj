@@ -27,6 +27,9 @@
 		10B7F21F2C74B69C00A34C46 /* GenreCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10B7F21D2C74B69C00A34C46 /* GenreCollectionViewCell.xib */; };
 		10B7F22C2C74ED1000A34C46 /* MovieInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B7F22B2C74ED1000A34C46 /* MovieInfo.swift */; };
 		10B7F22E2C74EEA000A34C46 /* MockMovieInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B7F22D2C74EEA000A34C46 /* MockMovieInfoStorage.swift */; };
+		10B7F2332C7601F900A34C46 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B7F2322C7601F900A34C46 /* AppCoordinator.swift */; };
+		10B7F2352C76022A00A34C46 /* HomeScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B7F2342C76022A00A34C46 /* HomeScreenCoordinator.swift */; };
+		10B7F2372C7608A300A34C46 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B7F2362C7608A300A34C46 /* CoordinatorProtocol.swift */; };
 		10B9BB8D2C6BA2E700224B55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B9BB8C2C6BA2E700224B55 /* AppDelegate.swift */; };
 		10B9BB962C6BA2E900224B55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10B9BB952C6BA2E900224B55 /* Assets.xcassets */; };
 		10B9BB992C6BA2E900224B55 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 10B9BB982C6BA2E900224B55 /* Base */; };
@@ -71,6 +74,9 @@
 		10B7F21D2C74B69C00A34C46 /* GenreCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenreCollectionViewCell.xib; sourceTree = "<group>"; };
 		10B7F22B2C74ED1000A34C46 /* MovieInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfo.swift; sourceTree = "<group>"; };
 		10B7F22D2C74EEA000A34C46 /* MockMovieInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMovieInfoStorage.swift; sourceTree = "<group>"; };
+		10B7F2322C7601F900A34C46 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		10B7F2342C76022A00A34C46 /* HomeScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenCoordinator.swift; sourceTree = "<group>"; };
+		10B7F2362C7608A300A34C46 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		10B9BB892C6BA2E700224B55 /* Kino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B9BB8C2C6BA2E700224B55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		10B9BB952C6BA2E900224B55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,6 +130,7 @@
 				10B7F2212C74B9E000A34C46 /* MainScreen */,
 				10B7F2242C74BA8E00A34C46 /* FavouritesScreen */,
 				10B7F2232C74BA5400A34C46 /* TicketScreen */,
+				10B7F2312C7601CA00A34C46 /* Coordinators */,
 				10B7F2222C74BA2200A34C46 /* Common */,
 			);
 			path = View;
@@ -195,6 +202,16 @@
 				1049138C2C6E8C1000806984 /* FavouritesViewController.xib */,
 			);
 			path = FavouritesScreen;
+			sourceTree = "<group>";
+		};
+		10B7F2312C7601CA00A34C46 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				10B7F2322C7601F900A34C46 /* AppCoordinator.swift */,
+				10B7F2342C76022A00A34C46 /* HomeScreenCoordinator.swift */,
+				10B7F2362C7608A300A34C46 /* CoordinatorProtocol.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		10B9BB802C6BA2E700224B55 = {
@@ -386,6 +403,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10B7F2372C7608A300A34C46 /* CoordinatorProtocol.swift in Sources */,
+				10B7F2352C76022A00A34C46 /* HomeScreenCoordinator.swift in Sources */,
+				10B7F2332C7601F900A34C46 /* AppCoordinator.swift in Sources */,
 				104913892C6E88E800806984 /* FavouritesViewController.swift in Sources */,
 				10B7F21B2C7392C400A34C46 /* PopularTableViewCell.swift in Sources */,
 				10B7F22E2C74EEA000A34C46 /* MockMovieInfoStorage.swift in Sources */,
