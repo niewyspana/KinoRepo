@@ -8,13 +8,17 @@
 import UIKit
 
 class PopularTableViewCell: UITableViewCell {
-    @IBOutlet private weak var genresCollectionView: UICollectionView!
-    @IBOutlet private weak var movieTitle: UILabel!
-    @IBOutlet private weak var time: UILabel!
-    @IBOutlet private weak var star: UIImageView!
-    @IBOutlet private weak var clock: UIImageView!
-    @IBOutlet private weak var rating: UILabel!
-    @IBOutlet private weak var imageMovie: UIImageView!
+    
+    static let identifier = "PopularTableViewCell"
+    
+    
+    @IBOutlet weak var genresCollectionView: UICollectionView!
+    @IBOutlet weak var movieTitle: UILabel!
+    @IBOutlet weak var time: UILabel!
+    @IBOutlet weak var star: UIImageView!
+    @IBOutlet weak var clock: UIImageView!
+    @IBOutlet weak var rating: UILabel!
+    @IBOutlet weak var imageMovie: UIImageView!
     
     private var genres: [String] = []
     
@@ -40,17 +44,21 @@ class PopularTableViewCell: UITableViewCell {
         genresCollectionView.reloadData()
     }
     
+    static func nib() -> UINib {
+        return UINib(nibName: identifier, bundle: nil)
+    }
+    
     private func setupCollectionView() {
-        genresCollectionView.register(GenreCollectionViewCell.nib, forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
+        genresCollectionView.register(GenreCollectionViewCell.nib(), forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
         
+        genresCollectionView.delegate = self
         genresCollectionView.dataSource = self
         
-        let layout = LeftAlignedCollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 8
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-
-        genresCollectionView.collectionViewLayout = layout
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.minimumInteritemSpacing = 8
+        flowLayout.estimatedItemSize = CGSize(width: 0, height: 18)
+        
+        genresCollectionView.collectionViewLayout = flowLayout
     }
 }
 
@@ -60,10 +68,16 @@ extension PopularTableViewCell: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as? GenreCollectionViewCell else {
-                return UICollectionViewCell()
-            }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as! GenreCollectionViewCell
         cell.configure(with: genres[indexPath.row])
         return cell
     }
+}
+
+extension PopularTableViewCell: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, 
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        CGSize(width: 61, height: 18)
+//    }
 }

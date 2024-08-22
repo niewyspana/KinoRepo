@@ -9,10 +9,12 @@ import UIKit
 
 class NowShowingCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet private var imageView: UIImageView!
-    @IBOutlet private weak var star: UIImageView!
-    @IBOutlet private weak var movieTitle: UILabel!
-    @IBOutlet private weak var rating: UILabel!
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet weak var star: UIImageView!
+    @IBOutlet weak var movieTitle: UILabel!
+    @IBOutlet weak var rating: UILabel!
+    
+    static let identifier = "NowShowingCollectionViewCell"
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,7 +24,6 @@ class NowShowingCollectionViewCell: UICollectionViewCell {
     private func setUpUI() {
         imageView.layer.cornerRadius = 8
     }
-    
     public func configure(movieInfo: MovieInfo) {
         imageView.image = movieInfo.previewImage
         movieTitle.text = movieInfo.title

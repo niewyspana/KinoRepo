@@ -60,7 +60,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="26" id="rr4-pp-URD"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="300" id="zTL-Ut-uYY"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="231" id="zTL-Ut-uYY"/>
                         </constraints>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="lJS-QY-WEm">
                             <size key="itemSize" width="128" height="128"/>
