@@ -13,10 +13,11 @@ class MockMovieInfoStorage {
     var popularMovies: [MovieInfo] = []
     
     init() {
-        createMovieInfos()
+        fillNowShowingMovieInfos()
+        fillPopularMovieInfos()
     }
     
-    private func createMovieInfos() {
+    private func fillNowShowingMovieInfos() {
         let theNeverendingStory = MovieInfo(previewImage: UIImage(named: "image")!,
                                             title: "The Neverending Story",
                                             rating: "9.8/10.0 IMDb",
@@ -40,11 +41,13 @@ class MockMovieInfoStorage {
                                              duration: "1h 50m")
         
         nowShowinMovies.append(theNeverendingStory3)
-        
+    }
+    
+    private func fillPopularMovieInfos() {
         let twinPeaks = MovieInfo(previewImage: UIImage(named: "TwinPeaks")!,
                                   title: "Twin Peaks",
                                   rating: "9.5/10.0 IMDb",
-                                  genres: ["THRILLER"],
+                                  genres: ["DRAMA", "FANTASY & DRAMA", "ADVENTURE & THRILLER", "COMEDY", "FANTASY & COMEDY"],
                                   duration: "1h 50m")
         
         popularMovies.append(twinPeaks)
@@ -52,7 +55,7 @@ class MockMovieInfoStorage {
         let chungkingExpress  = MovieInfo(previewImage: UIImage(named: "CE")!,
                                           title: "Chungking Express",
                                           rating: "9.5/10.0 IMDb",
-                                          genres: ["DRAMA"],
+                                          genres: ["DRAMA", "FANTASY", "ADVENTURE","DRAMA", "FANTASY", "ADVENTURE"],
                                           duration: "1h 50m")
         
         popularMovies.append(chungkingExpress)
