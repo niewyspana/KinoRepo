@@ -8,13 +8,19 @@
 import UIKit
 
 class MainViewController: UIViewController {
+    // MARK: - IBOutlets
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var collectionViewTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var tableView: UITableView!
     
+    // MARK: - Public variables
+    var viewModel: MainScreenViewModel!
+    
+    // MARK: - Private variables
     private var collectionHeaderView = HeaderView.loadFromNib()
     private var tableHeaderView = HeaderView.loadFromNib()
     
+    // MARK: - View controller life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         addHeaderView()
@@ -24,6 +30,12 @@ class MainViewController: UIViewController {
         setUpTableView()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        refreshCollectionViewTopConstraint()
+    }
+    
+    // MARK: - Private methods
     private func addHeaderView() {
         collectionHeaderView.configure(with: "Now Showing", buttonTitle: "See more")
         view.addSubview(collectionHeaderView)
@@ -60,11 +72,6 @@ class MainViewController: UIViewController {
         )
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        refreshCollectionViewTopConstraint()
-    }
-    
     private func refreshCollectionViewTopConstraint() {
         collectionViewTopConstraint.constant = collectionHeaderView.frame.maxY
     }
@@ -90,33 +97,36 @@ class MainViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        viewModel.didSelectNowShowing(at: indexPath)
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return MockMovieInfoStorage.shared.nowShowinMovies.count
+        return viewModel.nowShowingMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NowShowingCollectionViewCell.identifier, for: indexPath) as! NowShowingCollectionViewCell
         
-        cell.configure(movieInfo: MockMovieInfoStorage.shared.nowShowinMovies[indexPath.row])
+        cell.configure(movieInfo: MockMovieInfoStorage.shared.nowShowingMovies[indexPath.row])
         return cell
     }
 }
 
-
+// MARK: - UITableViewDataSource
 extension MainViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        MockMovieInfoStorage.shared.popularMovies.count
+        return viewModel.popularMovies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -128,8 +138,8 @@ extension MainViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension MainViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 136 // height + spaces (120 + 16)
     }
