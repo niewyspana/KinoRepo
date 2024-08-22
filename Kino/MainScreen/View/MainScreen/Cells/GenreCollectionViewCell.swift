@@ -8,11 +8,8 @@
 import UIKit
 
 class GenreCollectionViewCell: UICollectionViewCell {
-    
-    static let identifier = "GenreCollectionViewCell"
-    
-    @IBOutlet weak var genreLabel: UILabel!
-    @IBOutlet weak var roundedView: UIView!
+    @IBOutlet private weak var genreLabel: UILabel!
+    @IBOutlet private weak var roundedView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

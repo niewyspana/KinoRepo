@@ -8,9 +8,9 @@
 import UIKit
 
 class MainViewController: UIViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var collectionViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var tableView: UITableView!
     
     private var collectionHeaderView = HeaderView.loadFromNib()
     private var tableHeaderView = HeaderView.loadFromNib()
@@ -38,7 +38,6 @@ class MainViewController: UIViewController {
     }
     
     private func addTableHeaderView() {
-        
         tableHeaderView.configure(with: "Popular", buttonTitle: "See more")
         view.addSubview(tableHeaderView)
         
@@ -52,8 +51,6 @@ class MainViewController: UIViewController {
     }
     
     private func addTableView() {
-        view.addSubview(tableView)
-        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate(
             [tableView.topAnchor.constraint(equalTo: tableHeaderView.bottomAnchor),
@@ -73,7 +70,7 @@ class MainViewController: UIViewController {
     }
     
     private func setUpCollectionView() {
-        collectionView.register(NowShowingCollectionViewCell.nib(), forCellWithReuseIdentifier: NowShowingCollectionViewCell.identifier)
+        collectionView.register(NowShowingCollectionViewCell.nib, forCellWithReuseIdentifier: NowShowingCollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         
@@ -83,10 +80,11 @@ class MainViewController: UIViewController {
         collectionView.setCollectionViewLayout(layout, animated: true)
         
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        collectionView.showsHorizontalScrollIndicator = false
     }
     
     private func setUpTableView() {
-        tableView.register(PopularTableViewCell.nib(), forCellReuseIdentifier: PopularTableViewCell.identifier)
+        tableView.register(PopularTableViewCell.nib, forCellReuseIdentifier: PopularTableViewCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
     }
@@ -95,7 +93,6 @@ class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        print("You tapped me")
     }
 }
 
@@ -107,16 +104,11 @@ extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NowShowingCollectionViewCell.identifier, for: indexPath) as! NowShowingCollectionViewCell
         
-        // let mainImage = UIImage(named: "image")!
-        //  let starImage = UIImage(named: "star")!
-        // let movieTitle = "The Neverending Story\(indexPath.row + 1)"
-        //  let rating = "9.8/10.0 IMDb"
-        
-        
         cell.configure(movieInfo: MockMovieInfoStorage.shared.nowShowinMovies[indexPath.row])
         return cell
     }
 }
+
 
 extension MainViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -129,11 +121,7 @@ extension MainViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PopularTableViewCell.identifier, for: indexPath) as! PopularTableViewCell
-        // let mainImage = UIImage(named: "image")!
-        // let starImage = UIImage(named: "star")!
-        //let movieTitle = "The Neverending Story\(indexPath.row + 1)"
-        // let rating = "9.8/10.0 IMDb"
-        // let timetext = "1h 30m"
+        
         cell.configure(movieInfo: MockMovieInfoStorage.shared.popularMovies[indexPath.row])
         
         return cell
@@ -143,7 +131,7 @@ extension MainViewController: UITableViewDataSource {
 extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 136 // Высота ячейки + отступы (120 + 16)
+        return 136 // height + spaces (120 + 16)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -165,4 +153,3 @@ extension MainViewController: UITableViewDelegate {
         tableView.backgroundColor = UIColor.clear
     }
 }
-
