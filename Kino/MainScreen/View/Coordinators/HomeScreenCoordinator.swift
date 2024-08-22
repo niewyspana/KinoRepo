@@ -19,8 +19,10 @@ class HomeScreenCoordinator: CoordinatorProtocol {
     }
     
     func start() {
-        let movies = MainViewController(nibName: "MainViewController", bundle: nil)
-        movies.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "movieclapper"), tag: 0)
+        let mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)
+        mainViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "movieclapper"), tag: 0)
+        
+        mainViewController.coordinator = self
         
         let ticket = TicketsViewController(nibName: "TicketsViewController", bundle: nil)
         ticket.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "ticket"), tag: 1)
@@ -29,11 +31,16 @@ class HomeScreenCoordinator: CoordinatorProtocol {
         fav.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "heart.fill"), tag: 2)
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [movies, ticket, fav]
+        tabBarController.viewControllers = [mainViewController, ticket, fav]
         
         navigationController.setViewControllers([tabBarController], animated: false)
         
         setupNavigationBarItems(for: tabBarController)
+    }
+    
+    func goToDetailsScreen() {
+        let detailsViewController = DetailsViewController()
+        navigationController.pushViewController(detailsViewController, animated: true)
     }
     
     private func setupNavigationBarItems(for tabBarController: UITabBarController) {

@@ -12,6 +12,8 @@ class MainViewController: UIViewController {
     @IBOutlet private weak var collectionViewTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var tableView: UITableView!
     
+    public var coordinator: HomeScreenCoordinator?
+    
     private var collectionHeaderView = HeaderView.loadFromNib()
     private var tableHeaderView = HeaderView.loadFromNib()
     
@@ -93,6 +95,7 @@ class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        coordinator?.goToDetailsScreen()
     }
 }
 

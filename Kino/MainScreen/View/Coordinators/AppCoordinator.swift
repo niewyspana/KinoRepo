@@ -24,7 +24,6 @@ class AppCoordinator: CoordinatorProtocol {
     }
     
     func start() {
-        
         let homeScreenCoordinator = HomeScreenCoordinator(navigationController: navigationController)
         homeScreenCoordinator.start()
         print("AppCoordinator started")
