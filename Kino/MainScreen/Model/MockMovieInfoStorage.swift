@@ -9,7 +9,7 @@ import UIKit
 
 class MockMovieInfoStorage {
     static let shared = MockMovieInfoStorage()
-    var nowShowinMovies: [MovieInfo] = []
+    var nowShowingMovies: [MovieInfo] = []
     var popularMovies: [MovieInfo] = []
     
     init() {
@@ -24,7 +24,7 @@ class MockMovieInfoStorage {
                                             genres: ["FANTASY"],
                                             duration: "1h 30m")
         
-        nowShowinMovies.append(theNeverendingStory)
+        nowShowingMovies.append(theNeverendingStory)
         
         let theNeverendingStory2 = MovieInfo(previewImage: UIImage(named: "NS2")!,
                                              title: "The Neverending Story 2",
@@ -32,7 +32,7 @@ class MockMovieInfoStorage {
                                              genres: ["FANTASY", "ADVENTURE"],
                                              duration: "1h 40m")
         
-        nowShowinMovies.append(theNeverendingStory2)
+        nowShowingMovies.append(theNeverendingStory2)
         
         let theNeverendingStory3 = MovieInfo(previewImage: UIImage(named: "NS3")!,
                                              title: "The Neverending Story 3",
@@ -40,7 +40,7 @@ class MockMovieInfoStorage {
                                              genres: ["FANTASY"],
                                              duration: "1h 50m")
         
-        nowShowinMovies.append(theNeverendingStory3)
+        nowShowingMovies.append(theNeverendingStory3)
     }
     
     private func fillPopularMovieInfos() {

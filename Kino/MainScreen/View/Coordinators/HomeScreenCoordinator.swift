@@ -22,7 +22,8 @@ class HomeScreenCoordinator: CoordinatorProtocol {
         let mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)
         mainViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "movieclapper"), tag: 0)
         
-        mainViewController.coordinator = self
+        var viewModel = MainScreenViewModel(coordinator: self)
+        mainViewController.viewModel = viewModel
         
         let ticket = TicketsViewController(nibName: "TicketsViewController", bundle: nil)
         ticket.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "ticket"), tag: 1)
