@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func setupMainNavigationViewController() -> UINavigationController {
         let movies = MainViewController(nibName: "MainViewController", bundle: nil)
+        movies.viewModel = MainScreenViewModel()
         movies.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "movieclapper"), tag: 0)
         
         let ticket = TicketsViewController(nibName: "TicketsViewController", bundle: nil)
