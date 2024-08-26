@@ -13,6 +13,7 @@ class MainScreenViewModel {
     init (coordinator: HomeScreenCoordinator) {
         self.coordinator = coordinator
     }
+    
     var nowShowingMovies: [MovieInfo] {
         MockMovieInfoStorage.shared.nowShowingMovies
     }
@@ -22,7 +23,7 @@ class MainScreenViewModel {
     }
     
     func didSelectNowShowing(at indexPath: IndexPath) {
-        let moviewInfo = nowShowingMovies[indexPath.row]
+        let movieInfo = nowShowingMovies[indexPath.row]
         coordinator.goToDetailsScreen()
     }
 }
