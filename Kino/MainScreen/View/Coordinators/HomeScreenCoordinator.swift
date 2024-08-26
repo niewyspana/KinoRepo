@@ -12,7 +12,7 @@ class HomeScreenCoordinator: CoordinatorProtocol {
     
     var children: [any CoordinatorProtocol] = []
     
-    internal var navigationController: UINavigationController
+    var navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -25,17 +25,16 @@ class HomeScreenCoordinator: CoordinatorProtocol {
         let viewModel = MainScreenViewModel(coordinator: self)
         mainViewController.viewModel = viewModel
         
-        let ticket = TicketsViewController(nibName: "TicketsViewController", bundle: nil)
-        ticket.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "ticket"), tag: 1)
+        let ticketViewCoordinator = TicketsViewController(nibName: "TicketsViewController", bundle: nil)
+        ticketViewCoordinator.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "ticket"), tag: 1)
         
-        let fav = FavouritesViewController(nibName: "FavouritesViewController", bundle: nil)
-        fav.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "heart.fill"), tag: 2)
+        let favViewController = FavouritesViewController(nibName: "FavouritesViewController", bundle: nil)
+        favViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "heart.fill"), tag: 2)
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [mainViewController, ticket, fav]
+        tabBarController.viewControllers = [mainViewController, ticketViewCoordinator, favViewController]
         
         navigationController.setViewControllers([tabBarController], animated: false)
-        
         setupNavigationBarItems(for: tabBarController)
     }
     
@@ -64,4 +63,8 @@ class HomeScreenCoordinator: CoordinatorProtocol {
     
     @objc private func leftButtonTapped() { }
     @objc private func rightButtonTapped() { }
+    
+    func goToSeeMore() {
+        
+    }
 }

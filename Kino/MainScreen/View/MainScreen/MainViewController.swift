@@ -47,6 +47,10 @@ class MainViewController: UIViewController {
              collectionHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
              collectionHeaderView.heightAnchor.constraint(equalToConstant: 44)]
         )
+        
+        collectionHeaderView.seeMoreClosure = { [weak self] in
+            self?.viewModel.seeMorePressed()
+        }
     }
     
     private func addTableHeaderView() {
@@ -60,6 +64,10 @@ class MainViewController: UIViewController {
              tableHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
              tableHeaderView.heightAnchor.constraint(equalToConstant: 44)]
         )
+        
+        tableHeaderView.seeMoreClosure = { [weak self] in
+            self?.viewModel.seeMorePressed()
+        }
     }
     
     private func addTableView() {

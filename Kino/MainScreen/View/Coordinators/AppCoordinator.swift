@@ -8,9 +8,9 @@
 import UIKit
 
 class AppCoordinator: CoordinatorProtocol {
-    var parentCoordinator: (any CoordinatorProtocol)?
+    var parentCoordinator: CoordinatorProtocol?
     
-    var children: [any CoordinatorProtocol] = []
+    var children: [CoordinatorProtocol] = []
     
     var navigationController: UINavigationController
     
@@ -26,6 +26,5 @@ class AppCoordinator: CoordinatorProtocol {
     func start() {
         let homeScreenCoordinator = HomeScreenCoordinator(navigationController: navigationController)
         homeScreenCoordinator.start()
-        print("AppCoordinator started")
     }
 }

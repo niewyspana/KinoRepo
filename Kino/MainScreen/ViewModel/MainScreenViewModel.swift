@@ -9,7 +9,7 @@ import Foundation
 
 class MainScreenViewModel {
     
-    var coordinator: HomeScreenCoordinator!
+    var coordinator: HomeScreenCoordinator?
     init (coordinator: HomeScreenCoordinator) {
         self.coordinator = coordinator
     }
@@ -24,6 +24,14 @@ class MainScreenViewModel {
     
     func didSelectNowShowing(at indexPath: IndexPath) {
         let movieInfo = nowShowingMovies[indexPath.row]
-        coordinator.goToDetailsScreen()
+        if let coordinator = coordinator {
+            coordinator.goToDetailsScreen()
+        } else {
+            print("Coordinator is not set")
+        }
+    }
+    
+    func seeMorePressed() {
+        coordinator?.goToSeeMore()
     }
 }
