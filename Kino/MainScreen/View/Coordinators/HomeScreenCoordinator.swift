@@ -39,8 +39,14 @@ class HomeScreenCoordinator: CoordinatorProtocol {
     }
     
     func goToDetailsScreen() {
+        let movieDetailedInfo = MovieDetailedInfo(previewImage: UIImage(named: "trailer")!, title: "", imdbRating: "", rating: "", genres: [], language: "", duration: "", descriptionText: "", cast: [])
+        
+        let viewModel = DetailsViewModel(model: movieDetailedInfo)
+        
         let detailsViewController = DetailsViewController()
+        detailsViewController.viewModel = viewModel
         navigationController.pushViewController(detailsViewController, animated: true)
+        
     }
     
     private func setupNavigationBarItems(for tabBarController: UITabBarController) {

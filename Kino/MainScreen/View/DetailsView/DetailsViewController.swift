@@ -12,6 +12,22 @@ class DetailsViewController: UIViewController {
     // MARK: - GUI Variables
     
     var trailerImageView = UIImageView()
+    private var genres: [String] = ["ACTION", "ADVENTURE", "FANTASY"]
+    
+    private lazy var genresCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 8
+        layout.minimumLineSpacing = 8
+        layout.scrollDirection = .horizontal
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(GenreCollectionViewCell.nib(), forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
     
     private lazy var playButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -48,6 +64,51 @@ class DetailsViewController: UIViewController {
         return view
     }()
     
+    private lazy var roundedView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 30
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        view.layer.masksToBounds = true
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private lazy var movieTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "The Neverending Story"
+        label.font = UIFont.boldSystemFont(ofSize: 22)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var starImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "star")
+        imageView.tintColor = .yellow
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private lazy var ratingLabel: UILabel = {
+        let label = UILabel()
+        label.text = "9.1/10 IMDb"
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var bookmarkButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        button.tintColor = .black
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    var viewModel: DetailsViewModel!
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +133,18 @@ class DetailsViewController: UIViewController {
         navigationItem.leftBarButtonItem = backButton
         
         scrollView.contentInsetAdjustmentBehavior = .never
-
+        
+        fillUIFromViewModel()
+    }
+    
+    
+    func fillUIFromViewModel() {
+        trailerImageView.image = viewModel.model.previewImage
+        movieTitleLabel.text = viewModel.model.title
+        ratingLabel.text = "\(viewModel.model.imdbRating) IMDb"
+        genres = viewModel.model.genres
+        genresCollectionView.reloadData()
+        
     }
     
     @objc private func moreButtonTapped() {
@@ -90,6 +162,13 @@ class DetailsViewController: UIViewController {
         contentView.addSubview(trailerImageView)
         contentView.addSubview(playButton)
         contentView.addSubview(playLabel)
+        contentView.addSubview(roundedView)
+        
+        roundedView.addSubview(movieTitleLabel)
+        roundedView.addSubview(starImageView)
+        roundedView.addSubview(ratingLabel)
+        roundedView.addSubview(bookmarkButton)
+        roundedView.addSubview(genresCollectionView)
         
         setUpConstraints()
     }
@@ -116,7 +195,7 @@ class DetailsViewController: UIViewController {
             trailerImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             trailerImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             trailerImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            trailerImageView.heightAnchor.constraint(equalToConstant: 200)
+            trailerImageView.heightAnchor.constraint(equalToConstant: 260)
         ])
         
         NSLayoutConstraint.activate([
@@ -132,9 +211,60 @@ class DetailsViewController: UIViewController {
         ])
         
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
+        
+        NSLayoutConstraint.activate([
+            roundedView.topAnchor.constraint(equalTo: trailerImageView.bottomAnchor, constant: -25), roundedView.leadingAnchor.constraint(equalTo: view.leadingAnchor), roundedView.trailingAnchor.constraint(equalTo: view.trailingAnchor), roundedView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            movieTitleLabel.topAnchor.constraint(equalTo: roundedView.topAnchor, constant: 20),
+            movieTitleLabel.leadingAnchor.constraint(equalTo: roundedView.leadingAnchor, constant: 16),
+            movieTitleLabel.trailingAnchor.constraint(equalTo: bookmarkButton.leadingAnchor, constant: -8)
+        ])
+        
+        NSLayoutConstraint.activate([
+            bookmarkButton.topAnchor.constraint(equalTo: roundedView.topAnchor, constant: 16),
+            bookmarkButton.trailingAnchor.constraint(equalTo: roundedView.trailingAnchor, constant: -16),
+            bookmarkButton.widthAnchor.constraint(equalToConstant: 30),
+            bookmarkButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        NSLayoutConstraint.activate([
+            starImageView.topAnchor.constraint(equalTo: movieTitleLabel.bottomAnchor, constant: 8),
+            starImageView.leadingAnchor.constraint(equalTo: movieTitleLabel.leadingAnchor),
+            starImageView.widthAnchor.constraint(equalToConstant: 16),
+            starImageView.heightAnchor.constraint(equalToConstant: 16)
+        ])
+        
+        NSLayoutConstraint.activate([
+            ratingLabel.centerYAnchor.constraint(equalTo: starImageView.centerYAnchor),
+            ratingLabel.leadingAnchor.constraint(equalTo: starImageView.trailingAnchor, constant: 4)
+        ])
+        
+        NSLayoutConstraint.activate([
+            genresCollectionView.topAnchor.constraint(equalTo: starImageView.bottomAnchor, constant: 12),
+            genresCollectionView.leadingAnchor.constraint(equalTo: roundedView.leadingAnchor, constant: 16),
+            genresCollectionView.trailingAnchor.constraint(equalTo: roundedView.trailingAnchor, constant: -16),
+            genresCollectionView.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
     }
     
     @objc func playButtonTapped() {
         print("Play button tapped")
+    }
+}
+
+extension DetailsViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return genres.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as? GenreCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.configure(with: genres[indexPath.row])
+        return cell
     }
 }
