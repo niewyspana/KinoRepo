@@ -24,11 +24,11 @@ class MainScreenViewModel {
     
     func didSelectNowShowing(at indexPath: IndexPath) {
         let movieInfo = nowShowingMovies[indexPath.row]
-        if let coordinator = coordinator {
-            coordinator.goToDetailsScreen()
-        } else {
+        guard let coordinator = coordinator else {
             print("Coordinator is not set")
+            return
         }
+        coordinator.goToDetailsScreen()
     }
     
     func seeMorePressed() {
