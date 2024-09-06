@@ -8,6 +8,12 @@
 import Foundation
 
 class MainScreenViewModel {
+    
+    var coordinator: HomeScreenCoordinator?
+    init (coordinator: HomeScreenCoordinator) {
+        self.coordinator = coordinator
+    }
+    
     var nowShowingMovies: [MovieInfo] {
         MockMovieInfoStorage.shared.nowShowingMovies
     }
@@ -17,7 +23,15 @@ class MainScreenViewModel {
     }
     
     func didSelectNowShowing(at indexPath: IndexPath) {
-        let moviewInfo = nowShowingMovies[indexPath.row]
-        // use coordinator here to present next screen
+        let movieInfo = nowShowingMovies[indexPath.row]
+        guard let coordinator = coordinator else {
+            print("Coordinator is not set")
+            return
+        }
+        coordinator.goToDetailsScreen()
+    }
+    
+    func seeMorePressed() {
+        coordinator?.goToSeeMore()
     }
 }

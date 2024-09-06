@@ -61,4 +61,3 @@ class MockMovieInfoStorage {
         popularMovies.append(chungkingExpress)
     }
 }
-
