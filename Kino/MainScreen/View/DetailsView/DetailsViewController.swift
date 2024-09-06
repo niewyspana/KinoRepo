@@ -76,7 +76,6 @@ class DetailsViewController: UIViewController {
     
     private lazy var movieTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "The Neverending Story"
         label.font = UIFont.boldSystemFont(ofSize: 22)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +92,6 @@ class DetailsViewController: UIViewController {
     
     private lazy var ratingLabel: UILabel = {
         let label = UILabel()
-        label.text = "9.1/10 IMDb"
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -107,6 +105,142 @@ class DetailsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    private lazy var lengthLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Length"
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .gray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var durationLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var lengthStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [lengthLabel, durationLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 5
+        stackView.alignment = .leading
+        stackView.distribution = .equalCentering
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var languageLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Language"
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .gray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var languageTypeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .black
+        return label
+    }()
+    
+    private lazy var languageStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [languageLabel, languageTypeLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 5
+        stackView.alignment = .leading
+        stackView.distribution = .equalCentering
+        return stackView
+    }()
+    
+    private lazy var pgRatingLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Rating"
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .gray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var pgRatingNumberLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var ratingStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [pgRatingLabel, pgRatingNumberLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 5
+        stackView.alignment = .leading
+        stackView.distribution = .equalCentering
+        return stackView
+    }()
+    
+    private lazy var infoStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [lengthStackView, languageStackView, ratingStackView])
+        stackView.axis = .horizontal
+        stackView.spacing = 16
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Description"
+        label.font = UIFont(name: "StixTwoText-Bold", size: 16)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var movieDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .gray
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var headerView: HeaderView = {
+        let header = HeaderView.loadFromNib()
+        header.translatesAutoresizingMaskIntoConstraints = false
+        header.configure(with: "Cast", buttonTitle: "See more")
+        header.seeMoreClosure = { [weak self] in
+            self?.handleSeeMoreTapped()
+        }
+        return header
+    }()
+    
+    private lazy var actorsCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 8
+        layout.minimumInteritemSpacing = 8
+        layout.itemSize = CGSize(width: 100, height: 150)
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(ActorCollectionViewCell.self, forCellWithReuseIdentifier: "ActorCell")
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
+    private func handleSeeMoreTapped() {
+        print("See More button tapped")
+    }
+    
     var viewModel: DetailsViewModel!
     
     // MARK: - Life Cycle
@@ -137,14 +271,18 @@ class DetailsViewController: UIViewController {
         fillUIFromViewModel()
     }
     
-    
     func fillUIFromViewModel() {
         trailerImageView.image = viewModel.model.previewImage
         movieTitleLabel.text = viewModel.model.title
         ratingLabel.text = "\(viewModel.model.imdbRating) IMDb"
         genres = viewModel.model.genres
-        genresCollectionView.reloadData()
+        pgRatingNumberLabel.text = viewModel.model.rating
+        languageTypeLabel.text = viewModel.model.language
+        durationLabel.text = viewModel.model.duration
+        movieDescriptionLabel.text = viewModel.model.descriptionText
         
+        genresCollectionView.reloadData()
+        actorsCollectionView.reloadData()
     }
     
     @objc private func moreButtonTapped() {
@@ -169,6 +307,11 @@ class DetailsViewController: UIViewController {
         roundedView.addSubview(ratingLabel)
         roundedView.addSubview(bookmarkButton)
         roundedView.addSubview(genresCollectionView)
+        roundedView.addSubview(infoStackView)
+        roundedView.addSubview(descriptionLabel)
+        roundedView.addSubview(movieDescriptionLabel)
+        roundedView.addSubview(headerView)
+        roundedView.addSubview(actorsCollectionView)
         
         setUpConstraints()
     }
@@ -213,7 +356,10 @@ class DetailsViewController: UIViewController {
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            roundedView.topAnchor.constraint(equalTo: trailerImageView.bottomAnchor, constant: -25), roundedView.leadingAnchor.constraint(equalTo: view.leadingAnchor), roundedView.trailingAnchor.constraint(equalTo: view.trailingAnchor), roundedView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            roundedView.topAnchor.constraint(equalTo: trailerImageView.bottomAnchor, constant: -25),
+            roundedView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            roundedView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            roundedView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -248,6 +394,38 @@ class DetailsViewController: UIViewController {
             genresCollectionView.heightAnchor.constraint(equalToConstant: 40)
         ])
         
+        NSLayoutConstraint.activate([
+            infoStackView.topAnchor.constraint(equalTo: genresCollectionView.bottomAnchor, constant: 12),
+            infoStackView.leadingAnchor.constraint(equalTo: roundedView.leadingAnchor, constant: 16),
+            infoStackView.trailingAnchor.constraint(equalTo: roundedView.trailingAnchor, constant: -16),
+            infoStackView.bottomAnchor.constraint(lessThanOrEqualTo: roundedView.bottomAnchor, constant: -16)
+        ])
+        
+        NSLayoutConstraint.activate([
+            descriptionLabel.topAnchor.constraint(equalTo: infoStackView.bottomAnchor, constant: 20),
+            descriptionLabel.leadingAnchor.constraint(equalTo: roundedView.leadingAnchor, constant: 16),
+            descriptionLabel.trailingAnchor.constraint(equalTo: roundedView.trailingAnchor, constant: -16)
+        ])
+        
+        NSLayoutConstraint.activate([
+            movieDescriptionLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
+            movieDescriptionLabel.leadingAnchor.constraint(equalTo: roundedView.leadingAnchor, constant: 16),
+            movieDescriptionLabel.trailingAnchor.constraint(equalTo: roundedView.trailingAnchor, constant: -16),
+        ])
+        
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: movieDescriptionLabel.bottomAnchor, constant: 16),
+            headerView.leadingAnchor.constraint(equalTo: roundedView.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: roundedView.trailingAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 44)
+        ])
+        
+        NSLayoutConstraint.activate([
+            actorsCollectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
+            actorsCollectionView.leadingAnchor.constraint(equalTo: roundedView.leadingAnchor, constant: 16),
+            actorsCollectionView.trailingAnchor.constraint(equalTo: roundedView.trailingAnchor, constant: -16),
+            actorsCollectionView.heightAnchor.constraint(equalToConstant: 150)
+        ])
     }
     
     @objc func playButtonTapped() {
@@ -257,14 +435,29 @@ class DetailsViewController: UIViewController {
 
 extension DetailsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return genres.count
+        if collectionView == genresCollectionView {
+            return genres.count
+        } else if collectionView == actorsCollectionView {
+            return viewModel.actors.count
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as? GenreCollectionViewCell else {
-            return UICollectionViewCell()
+        if collectionView == genresCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as? GenreCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(with: genres[indexPath.row])
+            return cell
+        } else if collectionView == actorsCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActorCell", for: indexPath) as? ActorCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            let actor = viewModel.actors[indexPath.row]
+            cell.configure(with: actor)
+            return cell
         }
-        cell.configure(with: genres[indexPath.row])
-        return cell
+        return UICollectionViewCell()
     }
 }

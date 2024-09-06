@@ -8,6 +8,10 @@
 import UIKit
 
 struct Actor {
-    var fullName: String
-    var avatar: UIImage
+    let fullName: String
+    let imageName: String
+    
+    var avatar: UIImage? {
+        return UIImage(named: imageName)
+    }
 }

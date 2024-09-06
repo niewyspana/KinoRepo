@@ -8,18 +8,16 @@
 import Foundation
 
 class MainScreenViewModel {
-    
+    var nowShowingMovies: [MovieInfo]
+    var popularMovies: [MovieInfo]
     var coordinator: HomeScreenCoordinator?
-    init (coordinator: HomeScreenCoordinator) {
+    
+    init (coordinator: HomeScreenCoordinator,
+          nowShowingMovies: [MovieInfo],
+          popularMovies: [MovieInfo]) {
         self.coordinator = coordinator
-    }
-    
-    var nowShowingMovies: [MovieInfo] {
-        MockMovieInfoStorage.shared.nowShowingMovies
-    }
-    
-    var popularMovies: [MovieInfo] {
-        MockMovieInfoStorage.shared.popularMovies
+        self.nowShowingMovies = nowShowingMovies
+        self.popularMovies = popularMovies
     }
     
     func didSelectNowShowing(at indexPath: IndexPath) {
