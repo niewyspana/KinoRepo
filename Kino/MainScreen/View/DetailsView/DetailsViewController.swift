@@ -103,8 +103,17 @@ class DetailsViewController: UIViewController {
         button.setImage(UIImage(systemName: "bookmark"), for: .normal)
         button.tintColor = .black
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         return button
     }()
+    
+    private var isBookmarked = false
+    
+    @objc private func bookmarkButtonTapped() {
+        isBookmarked.toggle()
+        let imageName = isBookmarked ? "bookmark.fill" : "bookmark"
+        bookmarkButton.setImage(UIImage(systemName: imageName), for: .normal)
+    }
     
     private lazy var lengthLabel: UILabel = {
         let label = UILabel()
@@ -234,6 +243,7 @@ class DetailsViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
@@ -249,7 +259,6 @@ class DetailsViewController: UIViewController {
         view.backgroundColor = .white
         trailerImageView.image = UIImage(named: "trailer")
         trailerImageView.translatesAutoresizingMaskIntoConstraints = false
-        configureUI()
         
         navigationController?.navigationBar.tintColor = .white
         
@@ -268,10 +277,10 @@ class DetailsViewController: UIViewController {
         
         scrollView.contentInsetAdjustmentBehavior = .never
         
-        fillUIFromViewModel()
+        setupUI()
     }
     
-    func fillUIFromViewModel() {
+    func setupUI() {
         trailerImageView.image = viewModel.model.previewImage
         movieTitleLabel.text = viewModel.model.title
         ratingLabel.text = "\(viewModel.model.imdbRating) IMDb"
@@ -283,6 +292,13 @@ class DetailsViewController: UIViewController {
         
         genresCollectionView.reloadData()
         actorsCollectionView.reloadData()
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubviews(trailerImageView, playButton, playLabel, roundedView)
+        roundedView.addSubviews(movieTitleLabel, starImageView, ratingLabel, bookmarkButton, genresCollectionView, infoStackView, descriptionLabel, movieDescriptionLabel, headerView, actorsCollectionView)
+        
+        setUpConstraints()
     }
     
     @objc private func moreButtonTapped() {
@@ -293,28 +309,6 @@ class DetailsViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    private func configureUI() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        
-        contentView.addSubview(trailerImageView)
-        contentView.addSubview(playButton)
-        contentView.addSubview(playLabel)
-        contentView.addSubview(roundedView)
-        
-        roundedView.addSubview(movieTitleLabel)
-        roundedView.addSubview(starImageView)
-        roundedView.addSubview(ratingLabel)
-        roundedView.addSubview(bookmarkButton)
-        roundedView.addSubview(genresCollectionView)
-        roundedView.addSubview(infoStackView)
-        roundedView.addSubview(descriptionLabel)
-        roundedView.addSubview(movieDescriptionLabel)
-        roundedView.addSubview(headerView)
-        roundedView.addSubview(actorsCollectionView)
-        
-        setUpConstraints()
-    }
     
     private func setUpConstraints() {
         

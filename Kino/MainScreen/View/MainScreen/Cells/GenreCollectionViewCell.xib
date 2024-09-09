@@ -22,9 +22,6 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHC-IT-ZKv">
                                 <rect key="frame" x="8" y="2" width="189" height="14"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="14" id="EfB-Ov-Vs1"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                 <color key="textColor" name="88A4E8"/>
                                 <nil key="highlightedColor"/>

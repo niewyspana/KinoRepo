@@ -35,6 +35,11 @@ class MainViewController: UIViewController {
         refreshCollectionViewTopConstraint()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.layoutIfNeeded()
+    }
+    
     // MARK: - Private methods
     private func addHeaderView() {
         collectionHeaderView.configure(with: "Now Showing", buttonTitle: "See more")
@@ -147,11 +152,10 @@ extension MainViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
-extension MainViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 136 // height + spaces (120 + 16)
+extension MainViewController: UITableViewDelegate {    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectPopular(at: indexPath)
     }
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let inset: CGFloat = 8
         let maskLayer = CALayer()

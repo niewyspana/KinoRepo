@@ -12,7 +12,7 @@ class MainScreenViewModel {
     var popularMovies: [MovieInfo]
     var coordinator: HomeScreenCoordinator?
     
-    init (coordinator: HomeScreenCoordinator,
+    init(coordinator: HomeScreenCoordinator,
           nowShowingMovies: [MovieInfo],
           popularMovies: [MovieInfo]) {
         self.coordinator = coordinator
@@ -22,6 +22,15 @@ class MainScreenViewModel {
     
     func didSelectNowShowing(at indexPath: IndexPath) {
         let movieInfo = nowShowingMovies[indexPath.row]
+        guard let coordinator = coordinator else {
+            print("Coordinator is not set")
+            return
+        }
+        coordinator.goToDetailsScreen()
+    }
+    
+    func didSelectPopular(at indexPath: IndexPath) {
+        let movieInfo = popularMovies[indexPath.row]
         guard let coordinator = coordinator else {
             print("Coordinator is not set")
             return
