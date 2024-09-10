@@ -1,5 +1,5 @@
 //
-//  SubViews.swift
+//  UIView+Extension.swift
 //  Kino
 //
 //  Created by Viktoriya Polozova on 09/09/2024.
