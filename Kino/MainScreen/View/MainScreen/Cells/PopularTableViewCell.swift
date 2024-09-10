@@ -8,7 +8,7 @@
 import UIKit
 
 class PopularTableViewCell: UITableViewCell {
-    @IBOutlet private weak var genresCollectionView: UICollectionView!
+    @IBOutlet private weak var genresCollectionView: AutoContentSizeCollectionView!
     @IBOutlet private weak var movieTitle: UILabel!
     @IBOutlet private weak var time: UILabel!
     @IBOutlet private weak var star: UIImageView!
@@ -21,6 +21,7 @@ class PopularTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCollectionView()
+        makeCellSelectionColorClear()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -38,6 +39,7 @@ class PopularTableViewCell: UITableViewCell {
         imageMovie.layer.masksToBounds = true
         
         genresCollectionView.reloadData()
+        genresCollectionView.layoutIfNeeded()
     }
     
     private func setupCollectionView() {
@@ -52,6 +54,12 @@ class PopularTableViewCell: UITableViewCell {
 
         genresCollectionView.collectionViewLayout = layout
     }
+    
+    private func makeCellSelectionColorClear() {
+        let clearColorView = UIView()
+        clearColorView.backgroundColor = .clear
+        self.selectedBackgroundView = clearColorView
+    }
 }
 
 extension PopularTableViewCell: UICollectionViewDataSource {
@@ -65,5 +73,20 @@ extension PopularTableViewCell: UICollectionViewDataSource {
             }
         cell.configure(with: genres[indexPath.row])
         return cell
+    }
+}
+
+final class AutoContentSizeCollectionView: UICollectionView {
+    // MARK: - Public Properties
+    override var intrinsicContentSize: CGSize {
+        CGSize(
+            width: contentSize.width + contentInset.left + contentInset.right,
+            height: contentSize.height + contentInset.top + contentInset.bottom)
+    }
+    
+    override var contentSize: CGSize {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
     }
 }

@@ -14,8 +14,13 @@ class GenreCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        roundedView.layer.cornerRadius = roundedView.frame.height / 2
         roundedView.layer.masksToBounds = true
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        roundedView.layoutIfNeeded()
+        roundedView.layer.cornerRadius = roundedView.frame.height / 2
     }
     
     public func configure(with genre: String) {
