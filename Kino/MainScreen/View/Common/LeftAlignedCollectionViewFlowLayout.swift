@@ -23,7 +23,6 @@ class LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
             leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
             maxY = max(layoutAttribute.frame.maxY , maxY)
         }
- 
         return attributes
     }
 }

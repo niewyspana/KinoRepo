@@ -86,7 +86,7 @@ class MainViewController: UIViewController {
     }
     
     private func refreshCollectionViewTopConstraint() {
-        collectionViewTopConstraint.constant = collectionHeaderView.frame.maxY
+        collectionViewTopConstraint.constant = collectionHeaderView.frame.minY + collectionHeaderView.frame.height
     }
     
     private func setUpCollectionView() {

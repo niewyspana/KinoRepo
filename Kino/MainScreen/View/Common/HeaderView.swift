@@ -24,6 +24,7 @@ class HeaderView: UIView {
         let buttonTitleWithSpaces = "   " + buttonTitle + "   "
         button.setTitle(buttonTitleWithSpaces, for: .normal)
         setupButtonAppearance()
+        addSwipeGesture()
     }
     
     private func setupButtonAppearance() {
@@ -31,6 +32,15 @@ class HeaderView: UIView {
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = button.frame.height / 2
         button.layer.masksToBounds = true
+    }
+    private func addSwipeGesture() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeRight(_:)))
+        swipeRight.direction = .right
+        self.addGestureRecognizer(swipeRight)
+    }
+    
+    @objc private func handleSwipeRight(_ gesture: UISwipeGestureRecognizer) {
+        self.backgroundColor = UIColor.systemTeal
     }
     
     @IBAction func seeMoreAction(_ sender: Any) {

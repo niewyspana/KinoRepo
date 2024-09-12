@@ -41,6 +41,30 @@ class MockMovieInfoStorage {
                                              duration: "1h 50m")
         
         nowShowingMovies.append(theNeverendingStory3)
+        
+        let theNeverendingStory4 = MovieInfo(previewImage: UIImage(named: "image")!,
+                                            title: "The Neverending Story",
+                                            rating: "9.8/10.0 IMDb",
+                                            genres: ["FANTASY"],
+                                            duration: "1h 30m")
+        
+        nowShowingMovies.append(theNeverendingStory)
+        
+        let theNeverendingStory5 = MovieInfo(previewImage: UIImage(named: "NS2")!,
+                                             title: "The Neverending Story 2",
+                                             rating: "9.6/10.0 IMDb",
+                                             genres: ["FANTASY", "ADVENTURE"],
+                                             duration: "1h 40m")
+        
+        nowShowingMovies.append(theNeverendingStory2)
+        
+        let theNeverendingStory6 = MovieInfo(previewImage: UIImage(named: "NS3")!,
+                                             title: "The Neverending Story 3",
+                                             rating: "9.5/10.0 IMDb",
+                                             genres: ["FANTASY"],
+                                             duration: "1h 50m")
+        
+        nowShowingMovies.append(theNeverendingStory3)
     }
     
     private func fillPopularMovieInfos() {
@@ -59,5 +83,22 @@ class MockMovieInfoStorage {
                                           duration: "1h 50m")
         
         popularMovies.append(chungkingExpress)
+        
+        let twinPeaks2 = MovieInfo(previewImage: UIImage(named: "TwinPeaks")!,
+                                  title: "Twin Peaks",
+                                  rating: "9.5/10.0 IMDb",
+                                  genres: ["DRAMA", "FANTASY & DRAMA", "ADVENTURE & THRILLER", "COMEDY", "FANTASY & COMEDY"],
+                                  duration: "1h 50m")
+        
+        popularMovies.append(twinPeaks)
+        
+        let chungkingExpress2  = MovieInfo(previewImage: UIImage(named: "CE")!,
+                                          title: "Chungking Express",
+                                          rating: "9.5/10.0 IMDb",
+                                          genres: ["DRAMA", "FANTASY", "ADVENTURE","DRAMA", "FANTASY", "ADVENTURE"],
+                                          duration: "1h 50m")
+        
+        popularMovies.append(chungkingExpress)
+        
     }
 }
