@@ -28,18 +28,30 @@ class PopularTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    public func configure(movieInfo: MovieInfo) {
-        imageMovie.image = movieInfo.previewImage
+    public func configure(movieInfo: PopularMovie) {
+        if let image = movieInfo.image {
+            imageMovie.image = image
+        } else {
+            imageMovie.image = UIImage(named: "placeholder")
+        }
         movieTitle.text = movieInfo.title
-        self.rating.text = movieInfo.rating
-        time.text = movieInfo.duration
-        self.genres = movieInfo.genres
+        rating.text = formattedRating(from: movieInfo.rating)
+        // time.text = movieInfo.duration
+        // self.genres = movieInfo.genres
         
         imageMovie.layer.cornerRadius = 8
         imageMovie.layer.masksToBounds = true
         
         genresCollectionView.reloadData()
         genresCollectionView.layoutIfNeeded()
+    }
+    
+    private func formattedRating(from rating: Double?) -> String {
+        if let rating = rating {
+            return rating.description
+        } else {
+            return "N/A"
+        }
     }
     
     private func setupCollectionView() {
@@ -51,7 +63,7 @@ class PopularTableViewCell: UITableViewCell {
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-
+        
         genresCollectionView.collectionViewLayout = layout
     }
     
@@ -69,8 +81,8 @@ extension PopularTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.identifier, for: indexPath) as? GenreCollectionViewCell else {
-                return UICollectionViewCell()
-            }
+            return UICollectionViewCell()
+        }
         cell.configure(with: genres[indexPath.row])
         return cell
     }

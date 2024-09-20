@@ -23,10 +23,14 @@ class NowShowingCollectionViewCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 8
     }
     
-    public func configure(movieInfo: MovieInfo) {
-        imageView.image = movieInfo.previewImage
+    public func configure(movieInfo: NowShowingMovie) {
+        if let image = movieInfo.image {
+            imageView.image = image
+        } else {
+            imageView.image = UIImage(named: "placeholder")
+        }
         movieTitle.text = movieInfo.title
-        rating.text = movieInfo.rating
+        //  rating.text = movieInfo.rating
     }
     
     static func nib() -> UINib {

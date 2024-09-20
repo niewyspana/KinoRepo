@@ -28,6 +28,9 @@ class MainViewController: UIViewController {
         addTableView()
         setUpCollectionView()
         setUpTableView()
+        bindViewModel()
+        viewModel.loadNowShowingMovies()
+        viewModel.loadPopularMovies()
     }
     
     override func viewDidLayoutSubviews() {
@@ -41,6 +44,16 @@ class MainViewController: UIViewController {
     }
     
     // MARK: - Private methods
+    
+    private func bindViewModel() {
+        viewModel.onNowShowingMoviesLoaded = { [weak self] movies in
+            self?.collectionView.reloadData()
+        }
+        viewModel.onPopularMoviesLoaded = { [weak self] movies in
+            self?.tableView.reloadData()
+        }
+    }
+    
     private func addHeaderView() {
         collectionHeaderView.configure(with: "Now Showing", buttonTitle: "See more")
         view.addSubview(collectionHeaderView)
@@ -127,7 +140,7 @@ extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NowShowingCollectionViewCell.identifier, for: indexPath) as! NowShowingCollectionViewCell
         
-        cell.configure(movieInfo: MockMovieInfoStorage.shared.nowShowingMovies[indexPath.row])
+        cell.configure(movieInfo: viewModel.nowShowingMovies[indexPath.row])
         return cell
     }
 }
@@ -145,17 +158,19 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PopularTableViewCell.identifier, for: indexPath) as! PopularTableViewCell
         
-        cell.configure(movieInfo: MockMovieInfoStorage.shared.popularMovies[indexPath.row])
+        cell.configure(movieInfo: viewModel.popularMovies[indexPath.row])
         
         return cell
     }
 }
 
 // MARK: - UITableViewDelegate
-extension MainViewController: UITableViewDelegate {    
+extension MainViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelectPopular(at: indexPath)
     }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let inset: CGFloat = 8
         let maskLayer = CALayer()

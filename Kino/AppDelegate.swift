@@ -21,6 +21,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appCoordinator = AppCoordinator(window: window, navigationController: navigationController)
         appCoordinator?.start()
         
+        APIManager.fetchNowShowingMovies { result in
+            
+        }
+        
+        APIManager.fetchPopularMovies(page: 1) { result in
+            
+        }
+        
+        APIManager.fetchDetailsMovie(movieId: 5377540) { result in
+            
+            
+        }
+        APIManager.fetchCast(movieId: 5377540) { result in
+            
+            
+        }
+        
         return true
     }
+    
 }

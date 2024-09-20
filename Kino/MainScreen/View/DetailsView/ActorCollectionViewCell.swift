@@ -46,8 +46,12 @@ class ActorCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Configuration
     
-    func configure(with actor: Actor) {
-        actorImageView.image = actor.avatar
+    func configure(with actor: ActorResponse) {
+        if let image = actor.image {
+            actorImageView.image = image
+        } else {
+            actorImageView.image = UIImage(named: "placeholder")
+        }
         nameLabel.text = actor.fullName
     }
     
@@ -64,7 +68,8 @@ class ActorCollectionViewCell: UICollectionViewCell {
             
             nameLabel.topAnchor.constraint(equalTo: actorImageView.bottomAnchor, constant: 8),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            nameLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor)
         ])
     }
 }

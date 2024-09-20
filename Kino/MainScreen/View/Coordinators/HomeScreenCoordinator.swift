@@ -21,10 +21,9 @@ class HomeScreenCoordinator: CoordinatorProtocol {
     func start() {
         let mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)
         mainViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "movieclapper"), tag: 0)
-        
-        let viewModel = MainScreenViewModel(coordinator: self, 
-                                            nowShowingMovies: MockMovieInfoStorage.shared.nowShowingMovies,
-                                            popularMovies: MockMovieInfoStorage.shared.popularMovies)
+        let interactor = MainScreenInteractor()
+        let viewModel = MainScreenViewModel(coordinator: self,
+                                            interactor: interactor)
         mainViewController.viewModel = viewModel
         
         let ticketViewCoordinator = TicketsViewController(nibName: "TicketsViewController", bundle: nil)
@@ -40,24 +39,31 @@ class HomeScreenCoordinator: CoordinatorProtocol {
         setupNavigationBarItems(for: tabBarController)
     }
     
-    func goToDetailsScreen() {
-        let movieDetailedInfo = MovieDetailedInfo(previewImage: UIImage(named: "trailer")!,
-                                                  title: "The Neverending Story",
-                                                  imdbRating: "9/10",
-                                                  rating: "PG-20",
-                                                  genres: ["COMEDY", "DRAMA"],
-                                                  language: "English",
-                                                  duration: "1h 30m",
-                                                  descriptionText: "It is the story of Bastian Balthazar Bux, a lonely and unhappy child of approximately 10 years of age. He steals a book entitled, The Neverending Story, and skips school to read it. As he reads, he follows the Great Quest of Atreyu, who has been tasked with saving the Childlike Empress of Fantastica from The Nothing.",
-                                                  cast: [Actor(fullName: "Adam", imageName: "star")])
-        
-        // dependency injection can be: method(through method or initializer) injection, property injection
-        
-        let viewModel = DetailsViewModel(model: movieDetailedInfo) // method injection
+//    func goToDetailsScreen() {
+//        let movieDetailedInfo = MovieDetailedInfo(previewImage: UIImage(named: "trailer")!,
+//                                                  title: "The Neverending Story",
+//                                                  imdbRating: "9/10",
+//                                                  rating: "PG-20",
+//                                                  genres: ["COMEDY", "DRAMA"],
+//                                                  language: "English",
+//                                                  duration: "1h 30m",
+//                                                  descriptionText: "It is the story of Bastian Balthazar Bux, a lonely and unhappy child of approximately 10 years of age. He steals a book entitled, The Neverending Story, and skips school to read it. As he reads, he follows the Great Quest of Atreyu, who has been tasked with saving the Childlike Empress of Fantastica from The Nothing.",
+//                                                  cast: [Actor(fullName: "Adam", imageName: "star")])
+//        
+//        // dependency injection can be: method(through method or initializer) injection, property injection
+//        let viewModel = DetailsViewModel(model: movieDetailedInfo) // method injection
+//        let detailsViewController = DetailsViewController()
+//        detailsViewController.viewModel = viewModel // property injection
+//        navigationController.pushViewController(detailsViewController, animated: true)
+//        
+//    }
+    func goToDetailsScreen(movieId: Int) {
+        let interactor = DetailsScreenInteractor(movieId: movieId)
+        let viewModel = DetailsViewModel(interactor: interactor)
         let detailsViewController = DetailsViewController()
-        detailsViewController.viewModel = viewModel // property injection
-        navigationController.pushViewController(detailsViewController, animated: true)
+        detailsViewController.viewModel = viewModel
         
+        navigationController.pushViewController(detailsViewController, animated: true)
     }
     
     private func setupNavigationBarItems(for tabBarController: UITabBarController) {

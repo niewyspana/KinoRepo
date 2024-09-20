@@ -38,3 +38,26 @@ final class MovieDetailedInfo {
         self.cast = cast
     }
 }
+
+struct MovieDetailedInfoResponce: Codable {
+    let previewImageUrl: String
+    var image: UIImage?
+    let title: String
+    let imdbRating: Double?
+    let rating: Double?
+    //let genres: [String]
+    let year: Int
+    let duration: Int
+    let descriptionText: String
+    
+    enum CodingKeys: String, CodingKey {
+        case previewImageUrl = "posterUrl"
+        case title = "nameRu"
+        case imdbRating = "ratingImdb"
+        case rating = "ratingFilmCritics"
+        //case genres = "genres"
+        case year = "year"
+        case duration = "filmLength"
+        case descriptionText = "description"
+    }
+}

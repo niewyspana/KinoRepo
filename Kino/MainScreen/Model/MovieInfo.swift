@@ -7,14 +7,14 @@
 
 import UIKit
 
-final class MovieInfo {
-    let previewImage: UIImage
+class MovieInfo {
+    let previewImage: UIImage?
     let title: String
     let rating: String
     let genres: [String]
     let duration: String
     
-    init(previewImage: UIImage, 
+    init(previewImage: UIImage,
          title: String,
          rating: String,
          genres: [String],
