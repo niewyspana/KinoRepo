@@ -16,12 +16,18 @@ struct NowShowingMovie: Codable {
     let title: String
     let id: Int
     var image: UIImage?
-    //let rating: String
+    let genres: [MovieGenre]
+    var imdbRating: Double?
     
     enum CodingKeys: String, CodingKey {
         case previewImageUrl = "posterUrlPreview"
         case title = "nameRu"
         case id = "kinopoiskId"
-      //  case rating = "ratingKinopoisk"
+        case genres
+        case imdbRating = "ratingImdb"
     }
+}
+
+struct MovieGenre: Codable {
+    let genre: String
 }

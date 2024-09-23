@@ -9,9 +9,9 @@ import Foundation
 
 class MainScreenInteractor {
     func fetchNowShowing(completion: @escaping (Result<[NowShowingMovie], Error>) -> Void) {
-        APIManager.fetchNowShowingMovies(completion: completion)
+        APIManager.fetchNowShowingMoviesWithRatings(completion: completion)
     }
     func fetchPopularMovies(completion: @escaping (Result<[PopularMovie], Error>) -> Void) {
-        APIManager.fetchPopularMovies(page: 1, completion: completion)
+        APIManager.fetchPopularMoviesWithDuration(page: 1, completion: completion)
     }
 }

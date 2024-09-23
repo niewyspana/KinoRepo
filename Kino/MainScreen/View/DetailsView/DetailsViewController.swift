@@ -12,7 +12,7 @@ class DetailsViewController: UIViewController {
     // MARK: - GUI Variables
     
     var trailerImageView = UIImageView()
-    private var genres: [String] = ["ACTION", "ADVENTURE", "FANTASY"]
+    private var genres: [String] = []
     
     private lazy var genresCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -271,11 +271,12 @@ class DetailsViewController: UIViewController {
         }
         movieTitleLabel.text = viewModel.model?.title
         ratingLabel.text = "\(viewModel.model?.imdbRating ?? 0) IMDb"
-        // genres = viewModel.model.genres
+        genres = viewModel.model?.genres.map { $0.genre } ?? []
         pgRatingNumberLabel.text = "\(viewModel.model?.rating ?? 0)"
         yearTypeLabel.text = "\(viewModel.model?.year ?? 0)"
         durationLabel.text = "\(viewModel.model?.duration ?? 0) mins"
         movieDescriptionLabel.text = viewModel.model?.descriptionText
+        genresCollectionView.reloadData()
     }
     
     func setupUI() {

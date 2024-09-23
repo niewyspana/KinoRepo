@@ -36,9 +36,12 @@ class PopularTableViewCell: UITableViewCell {
         }
         movieTitle.text = movieInfo.title
         rating.text = formattedRating(from: movieInfo.rating)
-        // time.text = movieInfo.duration
-        // self.genres = movieInfo.genres
-        
+        if let duration = movieInfo.duration {
+            time.text = "\(duration) min"
+        } else {
+            time.text = "N/A"
+        }
+        genres = movieInfo.genres.map { $0.genre }
         imageMovie.layer.cornerRadius = 8
         imageMovie.layer.masksToBounds = true
         
@@ -48,9 +51,9 @@ class PopularTableViewCell: UITableViewCell {
     
     private func formattedRating(from rating: Double?) -> String {
         if let rating = rating {
-            return rating.description
+            return "\(rating) IMDb"
         } else {
-            return "N/A"
+            return "N/A IMDb"
         }
     }
     

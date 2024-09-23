@@ -22,7 +22,7 @@ struct PopularMovie: Codable {
     let genres: [Genre]
     let id: Int
     var image: UIImage?
-    //let duration: String
+    var duration: Int?
     
     enum CodingKeys: String, CodingKey {
         case previewImageUrl = "posterUrlPreview"
@@ -30,6 +30,6 @@ struct PopularMovie: Codable {
         case rating = "ratingImdb"
         case genres = "genres"
         case id = "kinopoiskId"
-       // case duration = "filmLength"
+        case duration = "filmLength"
     }
 }

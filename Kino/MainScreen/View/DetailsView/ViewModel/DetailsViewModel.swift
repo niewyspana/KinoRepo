@@ -38,7 +38,6 @@ class DetailsViewModel {
             }
         }
     }
-
     
     private func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         guard let url = URL(string: urlString) else {
@@ -72,38 +71,38 @@ class DetailsViewModel {
     }
     
     func loadCast() {
-            interactor.fetchCast { [weak self] result in
-                switch result {
-                case .success(let castResponses):
-                    self?.actors = castResponses
-                    self?.loadImageForCast(castResponses) { updatedActors in
-                        self?.actors = updatedActors
-                        DispatchQueue.main.async {
-                            self?.onCastLoaded?()
-                        }
+        interactor.fetchCast { [weak self] result in
+            switch result {
+            case .success(let castResponses):
+                self?.actors = castResponses
+                self?.loadImageForCast(castResponses) { updatedActors in
+                    self?.actors = updatedActors
+                    DispatchQueue.main.async {
+                        self?.onCastLoaded?()
                     }
-                case .failure(let error):
-                    self?.onError?(error)
                 }
+            case .failure(let error):
+                self?.onError?(error)
+            }
+        }
+    }
+    
+    private func loadImageForCast(_ cast: [ActorResponse], completion: @escaping ([ActorResponse]) -> Void) {
+        var updatedActors = cast
+        let group = DispatchGroup()
+        
+        for (index, actor) in cast.enumerated() {
+            group.enter()
+            loadImage(from: actor.imageUrl) { image in
+                updatedActors[index].image = image
+                group.leave()
             }
         }
         
-        private func loadImageForCast(_ cast: [ActorResponse], completion: @escaping ([ActorResponse]) -> Void) {
-            var updatedActors = cast
-            let group = DispatchGroup()
-            
-            for (index, actor) in cast.enumerated() {
-                group.enter()
-                loadImage(from: actor.imageUrl) { image in
-                    updatedActors[index].image = image
-                    group.leave()
-                }
-            }
-            
-            group.notify(queue: .main) {
-                completion(updatedActors)
-            }
+        group.notify(queue: .main) {
+            completion(updatedActors)
         }
+    }
     
     func didTapList() {
         

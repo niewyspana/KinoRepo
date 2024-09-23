@@ -74,4 +74,66 @@ extension APIManager {
             completion(.failure(NetworkingError.unknown))
         }
     }
+    
+    static func fetchNowShowingMoviesWithRatings(completion: @escaping (Result<[NowShowingMovie], Error>) -> ()) {
+        fetchNowShowingMovies { result in
+            switch result {
+            case .success(let movies):
+                var moviesWithRatings: [NowShowingMovie] = []
+                let dispatchGroup = DispatchGroup()
+                
+                for movie in movies {
+                    dispatchGroup.enter()
+                    fetchDetailsMovie(movieId: movie.id) { detailsResult in
+                        switch detailsResult {
+                        case .success(let detailedInfo):
+                            var movieWithRating = movie
+                            movieWithRating.imdbRating = detailedInfo.imdbRating
+                            moviesWithRatings.append(movieWithRating)
+                        case .failure(let error): break
+                        }
+                        dispatchGroup.leave()
+                    }
+                }
+                
+                dispatchGroup.notify(queue: .main) {
+                    completion(.success(moviesWithRatings))
+                }
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    static func fetchPopularMoviesWithDuration(page: Int, completion: @escaping (Result<[PopularMovie], Error>) -> ()) {
+        fetchPopularMovies(page: page) { result in
+            switch result {
+            case .success(let movies):
+                var moviesWithDuration: [PopularMovie] = []
+                let dispatchGroup = DispatchGroup()
+                
+                for movie in movies {
+                    dispatchGroup.enter()
+                    fetchDetailsMovie(movieId: movie.id) { detailsResult in
+                        switch detailsResult {
+                        case .success(let detailedInfo):
+                            var movieWithDuration = movie
+                            movieWithDuration.duration = detailedInfo.duration
+                            moviesWithDuration.append(movieWithDuration)
+                        case .failure(let error):
+                            break
+                        }
+                        dispatchGroup.leave()
+                    }
+                }
+                
+                dispatchGroup.notify(queue: .main) {
+                    completion(.success(moviesWithDuration))
+                }
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }

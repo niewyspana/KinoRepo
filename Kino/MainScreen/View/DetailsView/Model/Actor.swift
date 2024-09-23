@@ -7,15 +7,6 @@
 
 import UIKit
 
-//struct Actor {
-//    let fullName: String
-//    let imageName: String
-//    
-//    var avatar: UIImage? {
-//        return UIImage(named: imageName)
-//    }
-//}
-
 struct ActorResponse: Codable {
     let fullName: String
     let imageUrl: String
