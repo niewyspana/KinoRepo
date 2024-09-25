@@ -20,7 +20,6 @@ extension APIManager {
         
         let stringUrl = baseUrl + "api/v2.2/films/premieres" + "?year=\(currentYear)&month=\(currentMonth)"
         
-        
         guard let url = URL(string: stringUrl) else { return }
         
         var request = URLRequest(url: url)
@@ -81,30 +80,67 @@ extension APIManager {
             case .success(let movies):
                 var moviesWithRatings: [NowShowingMovie] = []
                 let dispatchGroup = DispatchGroup()
-                
+
                 for movie in movies {
                     dispatchGroup.enter()
+
                     fetchDetailsMovie(movieId: movie.id) { detailsResult in
                         switch detailsResult {
                         case .success(let detailedInfo):
                             var movieWithRating = movie
                             movieWithRating.imdbRating = detailedInfo.imdbRating
                             moviesWithRatings.append(movieWithRating)
-                        case .failure(let error): break
+
+                        case .failure(let error):
+                            if let urlError = error as? URLError {
+                                if urlError.code == .badServerResponse {
+                                    completion(.success(movies))
+                                    dispatchGroup.leave()
+                                    return
+                                } else {
+                                    completion(.failure(error))
+                                    dispatchGroup.leave()
+                                    return
+                                }
+                            }
+
+                            if let networkingError = error as? NetworkingError {
+                                switch networkingError {
+                                case .serverError(_, let data):
+                                    if let data = data,
+                                       let responseBody = String(data: data, encoding: .utf8),
+                                       responseBody.contains("You exceeded the quota") {
+                                        completion(.success(movies))
+                                        dispatchGroup.leave()
+                                        return
+                                    } else {
+                                        completion(.failure(error))
+                                        dispatchGroup.leave()
+                                        return
+                                    }
+                                default:
+                                    completion(.failure(error))
+                                    dispatchGroup.leave()
+                                    return
+                                }
+                            } else {
+                                completion(.failure(error))
+                            }
                         }
                         dispatchGroup.leave()
                     }
                 }
-                
+
                 dispatchGroup.notify(queue: .main) {
                     completion(.success(moviesWithRatings))
                 }
-                
+
             case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
+    
     static func fetchPopularMoviesWithDuration(page: Int, completion: @escaping (Result<[PopularMovie], Error>) -> ()) {
         fetchPopularMovies(page: page) { result in
             switch result {
@@ -114,6 +150,7 @@ extension APIManager {
                 
                 for movie in movies {
                     dispatchGroup.enter()
+                    
                     fetchDetailsMovie(movieId: movie.id) { detailsResult in
                         switch detailsResult {
                         case .success(let detailedInfo):
@@ -121,7 +158,39 @@ extension APIManager {
                             movieWithDuration.duration = detailedInfo.duration
                             moviesWithDuration.append(movieWithDuration)
                         case .failure(let error):
-                            break
+                            if let urlError = error as? URLError {
+                                if urlError.code == .badServerResponse {
+                                    completion(.success(movies))
+                                    dispatchGroup.leave()
+                                    return
+                                } else {
+                                    completion(.failure(error))
+                                    dispatchGroup.leave()
+                                    return
+                                }
+                            }
+                            if let networkingError = error as? NetworkingError {
+                                switch networkingError {
+                                case .serverError(_, let data):
+                                    if let data = data,
+                                       let responseBody = String(data: data, encoding: .utf8),
+                                       responseBody.contains("You exceeded the quota") {
+                                        completion(.success(movies))
+                                        dispatchGroup.leave()
+                                        return
+                                    } else {
+                                        completion(.failure(error))
+                                        dispatchGroup.leave()
+                                        return
+                                    }
+                                default:
+                                    completion(.failure(error))
+                                    dispatchGroup.leave()
+                                    return
+                                }
+                            } else {
+                                completion(.failure(error))
+                            }
                         }
                         dispatchGroup.leave()
                     }
@@ -130,7 +199,6 @@ extension APIManager {
                 dispatchGroup.notify(queue: .main) {
                     completion(.success(moviesWithDuration))
                 }
-                
             case .failure(let error):
                 completion(.failure(error))
             }

@@ -38,30 +38,13 @@ class HomeScreenCoordinator: CoordinatorProtocol {
         navigationController.setViewControllers([tabBarController], animated: false)
         setupNavigationBarItems(for: tabBarController)
     }
-    
-//    func goToDetailsScreen() {
-//        let movieDetailedInfo = MovieDetailedInfo(previewImage: UIImage(named: "trailer")!,
-//                                                  title: "The Neverending Story",
-//                                                  imdbRating: "9/10",
-//                                                  rating: "PG-20",
-//                                                  genres: ["COMEDY", "DRAMA"],
-//                                                  language: "English",
-//                                                  duration: "1h 30m",
-//                                                  descriptionText: "It is the story of Bastian Balthazar Bux, a lonely and unhappy child of approximately 10 years of age. He steals a book entitled, The Neverending Story, and skips school to read it. As he reads, he follows the Great Quest of Atreyu, who has been tasked with saving the Childlike Empress of Fantastica from The Nothing.",
-//                                                  cast: [Actor(fullName: "Adam", imageName: "star")])
-//        
-//        // dependency injection can be: method(through method or initializer) injection, property injection
-//        let viewModel = DetailsViewModel(model: movieDetailedInfo) // method injection
-//        let detailsViewController = DetailsViewController()
-//        detailsViewController.viewModel = viewModel // property injection
-//        navigationController.pushViewController(detailsViewController, animated: true)
-//        
-//    }
+  
     func goToDetailsScreen(movieId: Int) {
         let interactor = DetailsScreenInteractor(movieId: movieId)
-        let viewModel = DetailsViewModel(interactor: interactor)
+        // dependency injection can be: method(through method or initializer) injection, property injection
+        let viewModel = DetailsViewModel(interactor: interactor) // method injection
         let detailsViewController = DetailsViewController()
-        detailsViewController.viewModel = viewModel
+        detailsViewController.viewModel = viewModel // property injection
         
         navigationController.pushViewController(detailsViewController, animated: true)
     }

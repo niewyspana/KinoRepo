@@ -269,6 +269,7 @@ class DetailsViewController: UIViewController {
         } else {
             trailerImageView.image = UIImage(named: "placeholder")
         }
+        //trailerImageView.image = viewModel.model?.image ?? UIImage(named: "placeholder")
         movieTitleLabel.text = viewModel.model?.title
         ratingLabel.text = "\(viewModel.model?.imdbRating ?? 0) IMDb"
         genres = viewModel.model?.genres.map { $0.genre } ?? []
