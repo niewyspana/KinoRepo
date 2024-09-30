@@ -9,19 +9,24 @@ import Foundation
 
 extension APIManager {
     
+    private static let apiQueue = DispatchQueue(label: "com.APIManager.networkLayer.queue", attributes: .concurrent)
     // create url path and make request
     
     static func fetchDetailsMovie(movieId: Int, completion: @escaping (Result<MovieDetailedInfoResponce, Error>) -> ()) {
-        let stringUrl = baseUrl + "api/v2.2/films/" + "\(movieId)"
-        guard let url = URL(string: stringUrl) else { return }
-        
-        var request = URLRequest(url: url)
-        configureRequest(&request)
-        
-        let session = URLSession.shared.dataTask(with: request) { data, response, error in
-            handleDetailsResponse(data: data, error: error, completion: completion)
+        // Create a work item
+        let workItem = DispatchWorkItem {
+            let stringUrl = baseUrl + "api/v2.2/films/" + "\(movieId)"
+            guard let url = URL(string: stringUrl) else { return }
+            
+            var request = URLRequest(url: url)
+            configureRequest(&request)
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+                handleDetailsResponse(data: data, error: error, completion: completion)
+            }
+            session.resume()
         }
-        session.resume()
+        apiQueue.async(execute: workItem)
     }
     
     // handle response
@@ -41,17 +46,22 @@ extension APIManager {
         }
     }
     
+    // Fetch cast using a work item
     static func fetchCast(movieId: Int, completion: @escaping (Result<[ActorResponse], Error>) -> ()) {
-        let stringUrl = baseUrl + "api/v1/staff" + "?filmId=" + "\(movieId)"
-        guard let url = URL(string: stringUrl) else { return }
-        
-        var request = URLRequest(url: url)
-        configureRequest(&request)
-        
-        let session = URLSession.shared.dataTask(with: request) { data, response, error in
-            handleActorResponse(data: data, error: error, completion: completion)
+        let workItem = DispatchWorkItem {
+            let stringUrl = baseUrl + "api/v1/staff" + "?filmId=" + "\(movieId)"
+            guard let url = URL(string: stringUrl) else { return }
+            
+            var request = URLRequest(url: url)
+            configureRequest(&request)
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+                handleActorResponse(data: data, error: error, completion: completion)
+            }
+            session.resume()
         }
-        session.resume()
+        
+        apiQueue.async(execute: workItem)
     }
     
     private static func handleActorResponse(data: Data?, error: Error?, completion: @escaping (Result<[ActorResponse], Error>) -> ()) {

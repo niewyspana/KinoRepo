@@ -80,30 +80,41 @@ extension APIManager {
             case .success(let movies):
                 var moviesWithRatings: [NowShowingMovie] = []
                 let dispatchGroup = DispatchGroup()
-
+                
+                // create semaphore to control the number of concurrent tasks
+                let semaphore = DispatchSemaphore(value: 5)
+                
                 for movie in movies {
                     dispatchGroup.enter()
-
+                    print("task for movie \(movie.id) is waiting for semaphore...")
+                    
+                    semaphore.wait()
+                    
+                    print("task for movie \(movie.id) acquired the semaphore.")
+                    
                     fetchDetailsMovie(movieId: movie.id) { detailsResult in
                         switch detailsResult {
                         case .success(let detailedInfo):
                             var movieWithRating = movie
                             movieWithRating.imdbRating = detailedInfo.imdbRating
                             moviesWithRatings.append(movieWithRating)
-
+                            
+                            // Release the semaphore
+                            semaphore.signal()
+                            print("task for movie \(movie.id) released the semaphore.")
+                            
+                            dispatchGroup.leave()
+                            
                         case .failure(let error):
-                            if let urlError = error as? URLError {
-                                if urlError.code == .badServerResponse {
-                                    completion(.success(movies))
-                                    dispatchGroup.leave()
-                                    return
-                                } else {
-                                    completion(.failure(error))
-                                    dispatchGroup.leave()
-                                    return
-                                }
+            
+                            semaphore.signal()
+                            dispatchGroup.leave()
+                            
+                            if let urlError = error as? URLError, urlError.code == .badServerResponse {
+                                completion(.success(movies))
+                                return
                             }
-
+                            
                             if let networkingError = error as? NetworkingError {
                                 switch networkingError {
                                 case .serverError(_, let data):
@@ -111,36 +122,34 @@ extension APIManager {
                                        let responseBody = String(data: data, encoding: .utf8),
                                        responseBody.contains("You exceeded the quota") {
                                         completion(.success(movies))
-                                        dispatchGroup.leave()
                                         return
                                     } else {
                                         completion(.failure(error))
-                                        dispatchGroup.leave()
                                         return
                                     }
                                 default:
                                     completion(.failure(error))
-                                    dispatchGroup.leave()
                                     return
                                 }
                             } else {
                                 completion(.failure(error))
                             }
                         }
-                        dispatchGroup.leave()
                     }
                 }
-
+                
+                // Notify after all tasks are completed
                 dispatchGroup.notify(queue: .main) {
+                    print("all tasks completed.")
                     completion(.success(moviesWithRatings))
                 }
-
+                
             case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
-    
+ 
     static func fetchPopularMoviesWithDuration(page: Int, completion: @escaping (Result<[PopularMovie], Error>) -> ()) {
         fetchPopularMovies(page: page) { result in
             switch result {
