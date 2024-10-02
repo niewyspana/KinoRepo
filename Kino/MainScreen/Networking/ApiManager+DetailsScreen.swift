@@ -13,7 +13,7 @@ extension APIManager {
     
     static func fetchDetailsMovie(movieId: Int, completion: @escaping (Result<MovieDetailedInfoResponce, Error>) -> ()) {
         let stringUrl = baseUrl + "api/v2.2/films/" + "\(movieId)"
-        guard let url = URL(string: stringUrl) else { return }
+        guard let url = URL(string: stringUrl) else { return}
         
         var request = URLRequest(url: url)
         configureRequest(&request)

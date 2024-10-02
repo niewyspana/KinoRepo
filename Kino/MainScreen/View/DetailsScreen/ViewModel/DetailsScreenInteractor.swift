@@ -15,9 +15,15 @@ class DetailsScreenInteractor {
         self.movieId = movieId
     }
     func fetchDetailsMovie(completion: @escaping (Result<MovieDetailedInfoResponce, Error>) -> Void) {
-        APIManager.fetchDetailsMovie(movieId: movieId, completion: completion)
+        Task {
+            let result = try await APIManager.fetchDetailsMovie(movieId: movieId)
+            completion(result)
+        }
     }
     func fetchCast(completion: @escaping (Result<[ActorResponse], Error>) -> Void) {
-        APIManager.fetchCast(movieId: movieId, completion: completion)
+        Task {
+            let result = try await APIManager.fetchCast(movieId: movieId)
+            completion(result)
+        }
     }
 }

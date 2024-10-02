@@ -8,10 +8,18 @@
 import Foundation
 
 class MainScreenInteractor {
+    
     func fetchNowShowing(completion: @escaping (Result<[NowShowingMovie], Error>) -> Void) {
-        APIManager.fetchNowShowingMoviesWithRatings(completion: completion)
+        Task {
+            let result = try await APIManager.fetchNowShowingMoviesWithRatings()
+            completion(result)
+        }
     }
+    
     func fetchPopularMovies(completion: @escaping (Result<[PopularMovie], Error>) -> Void) {
-        APIManager.fetchPopularMoviesWithDuration(page: 1, completion: completion)
+        Task {
+            let result = try await APIManager.fetchPopularMoviesWithDuration(page: 1)
+            completion(result)
+        }
     }
 }
