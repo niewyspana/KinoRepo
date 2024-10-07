@@ -18,7 +18,7 @@ class MainScreenInteractor {
     
     func fetchPopularMovies(completion: @escaping (Result<[PopularMovie], Error>) -> Void) {
         Task {
-            let result = try await APIManager.fetchPopularMoviesWithDuration(page: 1)
+            let result = try await APIManager.fetchPopularMoviesWithDuration(page: 1 )
             completion(result)
         }
     }

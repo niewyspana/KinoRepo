@@ -26,14 +26,14 @@ class HomeScreenCoordinator: CoordinatorProtocol {
                                             interactor: interactor)
         mainViewController.viewModel = viewModel
         
-        let ticketViewCoordinator = TicketsViewController(nibName: "TicketsViewController", bundle: nil)
-        ticketViewCoordinator.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "ticket"), tag: 1)
+        let ticketViewController = TicketsViewController(nibName: "TicketsViewController", bundle: nil)
+        ticketViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "ticket"), tag: 1)
         
         let favViewController = FavouritesViewController(nibName: "FavouritesViewController", bundle: nil)
         favViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "heart.fill"), tag: 2)
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [mainViewController, ticketViewCoordinator, favViewController]
+        tabBarController.viewControllers = [mainViewController, ticketViewController, favViewController]
         
         navigationController.setViewControllers([tabBarController], animated: false)
         setupNavigationBarItems(for: tabBarController)
@@ -64,7 +64,6 @@ class HomeScreenCoordinator: CoordinatorProtocol {
         
         tabBarController.navigationItem.rightBarButtonItem = bellBarButton
         tabBarController.navigationItem.title = "KinkiNo"
-        print("HomeScreen started")
     }
     
     @objc private func leftButtonTapped() { }

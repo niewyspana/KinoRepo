@@ -14,7 +14,7 @@ class AppCoordinator: CoordinatorProtocol {
     
     var navigationController: UINavigationController
     
-    var window: UIWindow?
+    private var window: UIWindow?
     
     init(window: UIWindow?, navigationController: UINavigationController) {
         self.window = window

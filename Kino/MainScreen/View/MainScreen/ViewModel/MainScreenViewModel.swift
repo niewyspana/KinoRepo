@@ -11,8 +11,8 @@ class MainScreenViewModel {
     private(set) var nowShowingMovies: [NowShowingMovie] = []
     private(set) var popularMovies: [PopularMovie] = []
     
-    var onNowShowingMoviesLoaded: (([NowShowingMovie]) -> Void)?
-    var onPopularMoviesLoaded: (([PopularMovie]) -> Void)?
+    var onNowShowingMoviesLoaded: (() -> Void)?
+    var onPopularMoviesLoaded: (() -> Void)?
     
     let interactor: MainScreenInteractor
     var coordinator: HomeScreenCoordinator?
@@ -30,7 +30,7 @@ class MainScreenViewModel {
                 self?.loadNowShowingImagesForMovies(movies) { [weak self] updatedMovies in
                     DispatchQueue.main.async {
                         self?.nowShowingMovies = updatedMovies
-                        self?.onNowShowingMoviesLoaded?(updatedMovies)
+                        self?.onNowShowingMoviesLoaded?()
                     }
                 }
             case .failure(let error):
@@ -47,7 +47,7 @@ class MainScreenViewModel {
                 self?.loadPopularImagesForMovies(movies) { [weak self] updatedMovies in
                     DispatchQueue.main.async {
                         self?.popularMovies = updatedMovies
-                        self?.onPopularMoviesLoaded?(updatedMovies)
+                        self?.onPopularMoviesLoaded?()
                     }
                 }
             case .failure(let error):
