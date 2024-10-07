@@ -12,7 +12,7 @@ class NowShowingCollectionViewCell: UICollectionViewCell {
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private weak var star: UIImageView!
     @IBOutlet private weak var movieTitle: UILabel!
-    @IBOutlet private weak var rating: UILabel!
+    @IBOutlet private weak var imdbRating: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,10 +23,14 @@ class NowShowingCollectionViewCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 8
     }
     
-    public func configure(movieInfo: MovieInfo) {
-        imageView.image = movieInfo.previewImage
+    public func configure(movieInfo: NowShowingMovie) {
+        if let image = movieInfo.image {
+            imageView.image = image
+        } else {
+            imageView.image = UIImage(named: "placeholder")
+        }
         movieTitle.text = movieInfo.title
-        rating.text = movieInfo.rating
+        imdbRating.text = movieInfo.imdbRating != nil ? "\(movieInfo.imdbRating!) IMDb" : "N/A IMDb"
     }
     
     static func nib() -> UINib {

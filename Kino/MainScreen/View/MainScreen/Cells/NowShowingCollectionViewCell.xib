@@ -61,8 +61,8 @@
             <size key="customSize" width="216" height="336"/>
             <connections>
                 <outlet property="imageView" destination="3FE-VK-wlV" id="N8s-GW-860"/>
+                <outlet property="imdbRating" destination="7lM-ZE-g2w" id="Am6-cO-J6m"/>
                 <outlet property="movieTitle" destination="kEl-92-3zC" id="4tU-Ed-HW3"/>
-                <outlet property="rating" destination="7lM-ZE-g2w" id="Am6-cO-J6m"/>
                 <outlet property="star" destination="cct-Tv-55u" id="0RR-bZ-GGN"/>
             </connections>
             <point key="canvasLocation" x="119" y="-3"/>

@@ -12,7 +12,7 @@ class DetailsViewController: UIViewController {
     // MARK: - GUI Variables
     
     var trailerImageView = UIImageView()
-    private var genres: [String] = ["ACTION", "ADVENTURE", "FANTASY"]
+    private var genres: [String] = []
     
     private lazy var genresCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -22,7 +22,7 @@ class DetailsViewController: UIViewController {
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(GenreCollectionViewCell.nib(), forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
+        collectionView.register(GenreCollectionViewCell.nib, forCellWithReuseIdentifier: GenreCollectionViewCell.identifier)
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -142,24 +142,24 @@ class DetailsViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var languageLabel: UILabel = {
+    private lazy var yearLabel: UILabel = {
         let label = UILabel()
-        label.text = "Language"
+        label.text = "Year"
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .gray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var languageTypeLabel: UILabel = {
+    private lazy var yearTypeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .black
         return label
     }()
     
-    private lazy var languageStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [languageLabel, languageTypeLabel])
+    private lazy var yearStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [yearLabel, yearTypeLabel])
         stackView.axis = .vertical
         stackView.spacing = 5
         stackView.alignment = .leading
@@ -194,7 +194,7 @@ class DetailsViewController: UIViewController {
     }()
     
     private lazy var infoStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [lengthStackView, languageStackView, ratingStackView])
+        let stackView = UIStackView(arrangedSubviews: [lengthStackView, yearStackView, ratingStackView])
         stackView.axis = .horizontal
         stackView.spacing = 16
         stackView.alignment = .center
@@ -256,6 +256,32 @@ class DetailsViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        fillUI()
+        bindViewModel()
+        viewModel.loadDetails()
+        viewModel.loadCast()
+    }
+    
+    func fillUI() {
+        if let image = viewModel.model?.image {
+            trailerImageView.image = image
+        } else {
+            trailerImageView.image = UIImage(named: "placeholder")
+        }
+        //trailerImageView.image = viewModel.model?.image ?? UIImage(named: "placeholder")
+        movieTitleLabel.text = viewModel.model?.title
+        ratingLabel.text = "\(viewModel.model?.imdbRating ?? 0) IMDb"
+        genres = viewModel.model?.genres.map { $0.genre } ?? []
+        pgRatingNumberLabel.text = "\(viewModel.model?.rating ?? 0)"
+        yearTypeLabel.text = "\(viewModel.model?.year ?? 0)"
+        durationLabel.text = "\(viewModel.model?.duration ?? 0) mins"
+        movieDescriptionLabel.text = viewModel.model?.descriptionText
+        genresCollectionView.reloadData()
+    }
+    
+    func setupUI() {
+        scrollView.contentInsetAdjustmentBehavior = .never
         view.backgroundColor = .white
         trailerImageView.image = UIImage(named: "trailer")
         trailerImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -274,30 +300,29 @@ class DetailsViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = moreButton
         navigationItem.leftBarButtonItem = backButton
-        
-        scrollView.contentInsetAdjustmentBehavior = .never
-        
-        setupUI()
-    }
-    
-    func setupUI() {
-        trailerImageView.image = viewModel.model.previewImage
-        movieTitleLabel.text = viewModel.model.title
-        ratingLabel.text = "\(viewModel.model.imdbRating) IMDb"
-        genres = viewModel.model.genres
-        pgRatingNumberLabel.text = viewModel.model.rating
-        languageTypeLabel.text = viewModel.model.language
-        durationLabel.text = viewModel.model.duration
-        movieDescriptionLabel.text = viewModel.model.descriptionText
-        
         genresCollectionView.reloadData()
         actorsCollectionView.reloadData()
         
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubviews(trailerImageView, playButton, playLabel, roundedView)
-        roundedView.addSubviews(movieTitleLabel, starImageView, ratingLabel, bookmarkButton, genresCollectionView, infoStackView, descriptionLabel, movieDescriptionLabel, headerView, actorsCollectionView)
-        
+        contentView.addSubviews(
+            trailerImageView,
+            playButton,
+            playLabel,
+            roundedView
+        )
+        roundedView.addSubviews(
+            movieTitleLabel,
+            starImageView,
+            ratingLabel,
+            bookmarkButton,
+            genresCollectionView,
+            infoStackView,
+            descriptionLabel,
+            movieDescriptionLabel,
+            headerView,
+            actorsCollectionView
+        )
         setUpConstraints()
     }
     
@@ -309,6 +334,15 @@ class DetailsViewController: UIViewController {
     }
     
     // MARK: - Private Methods
+    
+    private func bindViewModel() {
+        viewModel.onDetailsLoaded = { [weak self] in
+            self?.fillUI()
+        }
+        viewModel.onCastLoaded = { [weak self] in
+            self?.actorsCollectionView.reloadData()
+        }
+    }
     
     private func setUpConstraints() {
         
@@ -351,15 +385,15 @@ class DetailsViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             roundedView.topAnchor.constraint(equalTo: trailerImageView.bottomAnchor, constant: -25),
-            roundedView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            roundedView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            roundedView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            roundedView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            roundedView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            roundedView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         
         NSLayoutConstraint.activate([
             movieTitleLabel.topAnchor.constraint(equalTo: roundedView.topAnchor, constant: 20),
             movieTitleLabel.leadingAnchor.constraint(equalTo: roundedView.leadingAnchor, constant: 16),
-            movieTitleLabel.trailingAnchor.constraint(equalTo: bookmarkButton.leadingAnchor, constant: -8)
+            movieTitleLabel.trailingAnchor.constraint(equalTo: bookmarkButton.trailingAnchor, constant: -8)
         ])
         
         NSLayoutConstraint.activate([
@@ -418,7 +452,8 @@ class DetailsViewController: UIViewController {
             actorsCollectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
             actorsCollectionView.leadingAnchor.constraint(equalTo: roundedView.leadingAnchor, constant: 16),
             actorsCollectionView.trailingAnchor.constraint(equalTo: roundedView.trailingAnchor, constant: -16),
-            actorsCollectionView.heightAnchor.constraint(equalToConstant: 150)
+            actorsCollectionView.heightAnchor.constraint(equalToConstant: 150),
+            actorsCollectionView.bottomAnchor.constraint(equalTo: roundedView.bottomAnchor)
         ])
     }
     
@@ -448,8 +483,8 @@ extension DetailsViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActorCell", for: indexPath) as? ActorCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            let actor = viewModel.actors[indexPath.row]
-            cell.configure(with: actor)
+            let actorResponse = viewModel.actors[indexPath.row]
+            cell.configure(with: actorResponse)
             return cell
         }
         return UICollectionViewCell()
