@@ -10,7 +10,9 @@ import Foundation
 enum NetworkingError: Error {
     case networkingError(_ error: Error)
     case unknown
+    case emptyData
     case invalidURL
+    case invalidResponse
     case quotaExceeded
     case serverError(statusCode: Int, data: Data?)
 }

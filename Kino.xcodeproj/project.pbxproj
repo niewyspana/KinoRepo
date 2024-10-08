@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		101F4C3F2CAC1D2B00F35BA7 /* AsyncApi+Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F4C3E2CAC1D2B00F35BA7 /* AsyncApi+Main.swift */; };
+		101F4C412CAC1D4B00F35BA7 /* AsyncApi+Details.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F4C402CAC1D4B00F35BA7 /* AsyncApi+Details.swift */; };
 		1027F06B2C998FEA00CFD3BF /* NowShowingMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1027F06A2C998FEA00CFD3BF /* NowShowingMovie.swift */; };
 		1027F06D2C99901A00CFD3BF /* PopularMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1027F06C2C99901A00CFD3BF /* PopularMovie.swift */; };
 		1027F06F2C9AE78600CFD3BF /* MainScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1027F06E2C9AE78600CFD3BF /* MainScreenInteractor.swift */; };
@@ -74,6 +76,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		101F4C3E2CAC1D2B00F35BA7 /* AsyncApi+Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AsyncApi+Main.swift"; sourceTree = "<group>"; };
+		101F4C402CAC1D4B00F35BA7 /* AsyncApi+Details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AsyncApi+Details.swift"; sourceTree = "<group>"; };
 		1027F06A2C998FEA00CFD3BF /* NowShowingMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowShowingMovie.swift; sourceTree = "<group>"; };
 		1027F06C2C99901A00CFD3BF /* PopularMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovie.swift; sourceTree = "<group>"; };
 		1027F06E2C9AE78600CFD3BF /* MainScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenInteractor.swift; sourceTree = "<group>"; };
@@ -156,7 +160,6 @@
 				1082D2E52C905CC200AFE6A6 /* Networking */,
 				104913792C6CF8A500806984 /* Model */,
 				104913782C6CF89900806984 /* View */,
-				1049137A2C6CF8B500806984 /* ViewModel */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -164,7 +167,7 @@
 		104913782C6CF89900806984 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				10B7F23A2C76191E00A34C46 /* DetailsView */,
+				10B7F23A2C76191E00A34C46 /* DetailsScreen */,
 				10B7F2212C74B9E000A34C46 /* MainScreen */,
 				10B7F2242C74BA8E00A34C46 /* FavouritesScreen */,
 				10B7F2232C74BA5400A34C46 /* TicketScreen */,
@@ -198,7 +201,9 @@
 			children = (
 				1082D2E62C905CE700AFE6A6 /* APIManager.swift */,
 				1027F0722C9C15B500CFD3BF /* ApiManager+MainScreen.swift */,
+				101F4C3E2CAC1D2B00F35BA7 /* AsyncApi+Main.swift */,
 				1027F0742C9C1E0000CFD3BF /* ApiManager+DetailsScreen.swift */,
+				101F4C402CAC1D4B00F35BA7 /* AsyncApi+Details.swift */,
 				1082D2E82C908A3A00AFE6A6 /* NetworkingError.swift */,
 			);
 			path = Networking;
@@ -222,6 +227,7 @@
 			children = (
 				104913802C6E28DF00806984 /* MainViewController.swift */,
 				1049137E2C6E26A800806984 /* MainViewController.xib */,
+				1049137A2C6CF8B500806984 /* ViewModel */,
 				10B7F2202C74B99C00A34C46 /* Cells */,
 			);
 			path = MainScreen;
@@ -267,7 +273,7 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
-		10B7F23A2C76191E00A34C46 /* DetailsView */ = {
+		10B7F23A2C76191E00A34C46 /* DetailsScreen */ = {
 			isa = PBXGroup;
 			children = (
 				10B7F2382C76182300A34C46 /* DetailsViewController.swift */,
@@ -275,7 +281,7 @@
 				10C712652C7DEBF1001405EF /* ViewModel */,
 				10C712662C7DEC2A001405EF /* Model */,
 			);
-			path = DetailsView;
+			path = DetailsScreen;
 			sourceTree = "<group>";
 		};
 		10B7F23F2C7760A300A34C46 /* Extensions */ = {
@@ -497,6 +503,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				101F4C412CAC1D4B00F35BA7 /* AsyncApi+Details.swift in Sources */,
 				10B7F2372C7608A300A34C46 /* CoordinatorProtocol.swift in Sources */,
 				10B7F2352C76022A00A34C46 /* HomeScreenCoordinator.swift in Sources */,
 				10B7F2332C7601F900A34C46 /* AppCoordinator.swift in Sources */,
@@ -520,6 +527,7 @@
 				104913852C6E2AC300806984 /* HeaderView.swift in Sources */,
 				10C712602C7DE4AD001405EF /* DetailsViewModel.swift in Sources */,
 				104913872C6E885200806984 /* TicketsViewController.swift in Sources */,
+				101F4C3F2CAC1D2B00F35BA7 /* AsyncApi+Main.swift in Sources */,
 				10B7F2452C77615200A34C46 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				106A3E8D2C8F236D00CBC9C7 /* UIView+Extension.swift in Sources */,
 				10B9BB8D2C6BA2E700224B55 /* AppDelegate.swift in Sources */,

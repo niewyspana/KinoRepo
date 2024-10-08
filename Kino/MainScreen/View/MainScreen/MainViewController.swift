@@ -41,15 +41,16 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.layoutIfNeeded()
+        navigationController?.navigationBar.tintColor = .blue
     }
     
     // MARK: - Private methods
     
     private func bindViewModel() {
-        viewModel.onNowShowingMoviesLoaded = { [weak self] movies in
+        viewModel.onNowShowingMoviesLoaded = { [weak self] in
             self?.collectionView.reloadData()
         }
-        viewModel.onPopularMoviesLoaded = { [weak self] movies in
+        viewModel.onPopularMoviesLoaded = { [weak self] in
             self?.tableView.reloadData()
         }
     }
