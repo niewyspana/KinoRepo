@@ -23,7 +23,7 @@ class MainScreenViewModel {
     }
     
     func loadNowShowingMovies() {
-        interactor.fetchNowShowing { [weak self] result in
+        interactor.fetchNowShowing(completion: { [weak self] result in
             switch result {
             case .success(let movies):
                 self?.nowShowingMovies = movies
@@ -36,7 +36,8 @@ class MainScreenViewModel {
             case .failure(let error):
                 print("Error: \(error)")
             }
-        }
+            
+        })
     }
     
     func loadPopularMovies() {
